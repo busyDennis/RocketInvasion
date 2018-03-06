@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<SourceFileCollection xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <Profile>Reach</Profile>
+  <Platform>Android</Platform>
+  <Config />
+  <SourceFiles>
+    <File>C:/Users/###333###/Documents/Projects/RocketInvasion/RocketInvasion/RocketInvasion.Droid/Assets/Content/alienSpaceship.png</File>
+    <File>C:/Users/###333###/Documents/Projects/RocketInvasion/RocketInvasion/RocketInvasion.Droid/Assets/Content/rocket.png</File>
+    <File>C:/Users/###333###/Documents/Projects/RocketInvasion/RocketInvasion/RocketInvasion.Droid/Assets/Content/spaceship.png</File>
+    <File>C:/Users/###333###/Documents/Projects/RocketInvasion/RocketInvasion/RocketInvasion.Droid/Assets/Content/explosion2.png</File>
+  </SourceFiles>
+</SourceFileCollection>

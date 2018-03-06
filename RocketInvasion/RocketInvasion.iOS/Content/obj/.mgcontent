@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<SourceFileCollection xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <Profile>Reach</Profile>
+  <Platform>iOS</Platform>
+  <Config />
+  <SourceFiles>
+    <File>C:/Users/moong/Documents/VS2017workspace2/RocketInvasion/RocketInvasion/RocketInvasion.iOS/Content/rocket.png</File>
+    <File>C:/Users/moong/Documents/VS2017workspace2/RocketInvasion/RocketInvasion/RocketInvasion.iOS/Content/spaceship.png</File>
+  </SourceFiles>
+</SourceFileCollection>

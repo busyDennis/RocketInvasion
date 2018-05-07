@@ -11,6 +11,6 @@ namespace RocketInvasion
 
         public static CCVector2 alienInvaderVelocity = new CCVector2 (0, -2);
 
-        public static Mutex mutex = new Mutex();
+        public static Mutex renderingSurfaceMutex = new Mutex();
     }
 }

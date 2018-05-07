@@ -6,8 +6,7 @@ namespace RocketInvasion.Common.Sprites
     {
         private CCAffineTransform affineTransform = new CCAffineTransform();
 
-        public AlienInvader()
-        {
+        public AlienInvader() {
             this.scaleFactor = 0.5f;
             this.VelocityVec = GameParameters.alienInvaderVelocity;
 
@@ -16,15 +15,13 @@ namespace RocketInvasion.Common.Sprites
             base.DrawSprite("alienSpaceship");
         }
 
-        new public void NextTurnMove()
-        {
-            GameParameters.mutex.WaitOne();
+        new public void NextFrameUpdate() {
+            GameParameters.renderingSurfaceMutex.WaitOne();
             this.Position += new CCPoint(this.VelocityVec.X, this.VelocityVec.Y);
-            GameParameters.mutex.ReleaseMutex();
+            GameParameters.renderingSurfaceMutex.ReleaseMutex();
         }
 
-        public void LaunchRocket()
-        {
+        public void LaunchRocket() {
 
         }
     }

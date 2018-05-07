@@ -11,33 +11,31 @@ namespace RocketInvasion.Common.Sprites
 
         protected CCVector2 VelocityVec;
 
-        public SpriteNode()
-        {
+        public SpriteNode() {
             scaleFactor = 1.0f;
             VelocityVec = new CCVector2(0, 0);
+
+            Schedule(AnimationActivity);
         }
 
-        public void DrawSprite(String imgFileName)
-        {
+        public void DrawSprite(String imgFileName) {
             sprite = new CCSprite(imgFileName);
             sprite.Scale = scaleFactor;
 
             this.AddChild(sprite);
         }
 
-        public void NextTurnMove()
-        {
-            GameParameters.mutex.WaitOne();
+        public void NextFrameUpdate() {
+            GameParameters.renderingSurfaceMutex.WaitOne();
             this.Position += new CCPoint(this.VelocityVec.X, this.VelocityVec.Y);
-            GameParameters.mutex.ReleaseMutex();
+            GameParameters.renderingSurfaceMutex.ReleaseMutex();
         }
 
-        public void Erase()
-        {
-            GameParameters.mutex.WaitOne();
+        public void Erase() {
             this.RemoveFromParent();
-            GameParameters.mutex.ReleaseMutex();
         }
+
+        protected void AnimationActivity(float timeElapsed) {}
 
     }
 }

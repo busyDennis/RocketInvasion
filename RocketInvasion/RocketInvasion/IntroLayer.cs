@@ -1,5 +1,7 @@
 ﻿using CocosSharp;
 using System.Collections.Generic;
+using System.Threading;
+using System.Threading.Tasks;
 
 using RocketInvasion.Common.Sprites;
 
@@ -12,8 +14,8 @@ namespace RocketInvasion
 
         Spaceship spaceship;
 
-        Rocket[] rocketsList;
-        int rocketsListSize;
+        List<Rocket> rocketsList;
+        // int rocketsListSize;
 
         AlienInvader[] alienInvadersList;
         int alienInvadersListSize;
@@ -26,10 +28,9 @@ namespace RocketInvasion
             spaceship = new Spaceship();
 
             spaceship.Position = new CCPoint(300, 50);
-            spaceship.RocketLaunched += HandleRocketAdded;
+            spaceship.RocketLaunched += NewRocketHandler;
 
-            rocketsList = new Rocket[100];
-            rocketsListSize = 0;
+            rocketsList = new List<Rocket>();
 
             alienInvadersList = new AlienInvader[100];
 
@@ -49,30 +50,7 @@ namespace RocketInvasion
             renderTexture.Sprite.AddChild(spaceship);
 
 
-            //testing space
-            //----------------------------------------------
-            /*
-            CCSpriteSheet spriteSheet = new CCSpriteSheet("animations/rocket_explosion.plist", "animations/rocket_explosion.png");
-
-            List<CCSpriteFrame> animationFrames = spriteSheet.Frames.FindAll((x) => x.TextureFilename.StartsWith("frame"));
-
-
-            CCAnimation explosionAnimation = new CCAnimation(animationFrames, 0.3f);
-            CCAction explosionAction = new CCAnimate(explosionAnimation);
-
-            CCSprite explosionSprite = new CCSprite(animationFrames[0]);
-            explosionSprite.Scale = 1.5f;
-            explosionSprite.Position = new CCPoint(300, 400);
-
-
-            renderTexture.Sprite.AddChild(explosionSprite);
-
-            explosionSprite.AddAction(explosionAction);
-            */
-            //----------------------------------------------
-
-
-            Schedule(GameLoop);
+            Schedule(GameLoop, 0.02f);
         }
 
         void GameLoop(float frameTimeInSeconds)
@@ -82,34 +60,44 @@ namespace RocketInvasion
             spaceship.RocketLaunchingActivity(frameTimeInSeconds);
 
             // update sprites
-            for (int i = 0; i < alienInvadersListSize; i++)
-            {
-                alienInvadersList[i].NextTurnMove();
+
+            for (int i = 0; i < rocketsList.Count; i++) {
+                rocketsList[i].NextFrameUpdate();
             }
 
-            for (int i = 0; i < rocketsListSize; i++)
-            {
-                rocketsList[i].NextTurnMove(); //Activity(frameTimeInSeconds);
-                HandleRocketCollisions(i);
+            for (int i = 0; i < alienInvadersListSize; i++) {
+                alienInvadersList[i].NextFrameUpdate();
             }
+
+            // Handle collisons
+
+            // (1) Rocket collisions - replace with enemy collisions
+            
+            for (int i = 0; i < rocketsList.Count; i++) {
+                RocketVsEnemyCollisionHandler(i);
+            }
+            
+
+            // (2) Player collisions
+
 
         }
 
-        private void HandleRocketCollisions(int index)
-        {
-            float posY = rocketsList[index].Position.Y;
-
+        private void RocketVsEnemyCollisionHandler(int index) {
             // collision with container borders 
-            if (posY > 500)//this.ContentSize.Height)
-            {
-                rocketsList[index].Explode();
+            if (rocketsList[index].Position.Y > 500) { //this.ContentSize.Height)
+                System.Diagnostics.Debug.WriteLine(rocketsList[index].Position.Y);
 
-                rocketsList[index] = rocketsList[rocketsListSize - 1];
-                rocketsListSize--;
+                //Task.Run(() => {
+                //        rocketsList[index].Explode();
+                //    }); //.ContinueWith(t => { rocketsList[index].Erase(); });
+
+                Monitor.Enter(rocketsList);
+                rocketsList[index].Explode();
+                rocketsList.RemoveAt(index);
+                Monitor.Exit(rocketsList);
 
                 // CCAudioEngine.SharedEngine.PlayEffect("RocketExplosion");
-
-
                 // System.Diagnostics.Debug.WriteLine(this.ChildrenCount);
             }
 
@@ -123,15 +111,15 @@ namespace RocketInvasion
             */
         }
 
-        private void HandleRocketAdded(Rocket rocket)
-        {
-            rocketsList[rocketsListSize++] = rocket;
+        private void NewRocketHandler(Rocket rocket) {
+            Monitor.Enter(rocketsList);
+            rocketsList.Add(rocket);
 
             renderTexture.Sprite.AddChild(rocket);
+            Monitor.Exit(rocketsList);
         }
 
-        protected override void AddedToScene()
-        {
+        protected override void AddedToScene() {
             base.AddedToScene();
 
             CCRect bounds = VisibleBoundsWorldspace;

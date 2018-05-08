@@ -1,6 +1,5 @@
 ﻿using CocosSharp;
-using System.Collections.Generic;
-using System.Threading.Tasks;
+
 
 namespace RocketInvasion.Common.Sprites
 {
@@ -13,31 +12,13 @@ namespace RocketInvasion.Common.Sprites
             base.DrawSprite("rocket");
         }
 
-        public void Explode() {
-            // this.VelocityVec.X = 0;
+        public void ExplodeAndErase() {
             this.VelocityVec.Y = 0;
 
             this.sprite.Scale = 2.5f;
             this.sprite.SpriteFrame = Animations.rocketExplosionAnimationFrames[0];
 
-            //CCActionState actionState = 
-            this.sprite.RunActionsAsync(Animations.rocketExplosionAction);
-
-            //CCSequence mySequence = new CCSequence(Animations.rocketExplosionAction, new Task());
-            //this.sprite.RunAction(mySequence);
-
-
-            // this.Erase();
-
-            // this.StopAction(actionState);
-
-            /*
-            while (this.sprite.GetActionState(Animations.rocketExplosionAction.Tag).Target != null)
-            {
-                System.Threading.Tasks.Task.Delay(1).Wait();
-            }
-            */
+            this.sprite.RunActionsAsync(Animations.rocketExplosionAction, new CCCallFunc(this.Erase));
         }
-
     }
 }

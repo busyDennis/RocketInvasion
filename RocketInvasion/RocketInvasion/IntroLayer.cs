@@ -1,7 +1,7 @@
-﻿using CocosSharp;
+﻿using CocosDenshion;
+using CocosSharp;
 using System.Collections.Generic;
 using System.Threading;
-using System.Threading.Tasks;
 
 using RocketInvasion.Common.Sprites;
 
@@ -15,10 +15,7 @@ namespace RocketInvasion
         Spaceship spaceship;
 
         List<Rocket> rocketsList;
-        // int rocketsListSize;
-
-        AlienInvader[] alienInvadersList;
-        int alienInvadersListSize;
+        List<AlienInvader> alienInvadersList;
 
 
         public IntroLayer() : base(CCColor4B.Black)
@@ -32,12 +29,10 @@ namespace RocketInvasion
 
             rocketsList = new List<Rocket>();
 
-            alienInvadersList = new AlienInvader[100];
+            alienInvadersList = new List<AlienInvader>();
 
-            alienInvadersList[0] = new AlienInvader();
-            alienInvadersListSize = 1;
-
-            alienInvadersList[0].Position = new CCPoint(500, 1000);
+            alienInvadersList.Add(new AlienInvader());
+            alienInvadersList[0].Position = new CCPoint(500, 1000); //fix this
 
             renderTexture.BeginWithClear(CCColor4B.Transparent);
             this.Visit();
@@ -45,27 +40,23 @@ namespace RocketInvasion
 
             this.AddChild(renderTexture.Sprite);
 
-            renderTexture.Sprite.AddChild(alienInvadersList[0]);
-
             renderTexture.Sprite.AddChild(spaceship);
-
+            renderTexture.Sprite.AddChild(alienInvadersList[0]);
 
             Schedule(GameLoop, 0.02f);
         }
 
         void GameLoop(float frameTimeInSeconds)
         {
-            // System.Diagnostics.Debug.WriteLine("inside game loop");
-
             spaceship.RocketLaunchingActivity(frameTimeInSeconds);
 
-            // update sprites
+            // Update sprites
 
             for (int i = 0; i < rocketsList.Count; i++) {
                 rocketsList[i].NextFrameUpdate();
             }
 
-            for (int i = 0; i < alienInvadersListSize; i++) {
+            for (int i = 0; i < alienInvadersList.Count; i++) {
                 alienInvadersList[i].NextFrameUpdate();
             }
 
@@ -73,48 +64,45 @@ namespace RocketInvasion
 
             // (1) Rocket collisions - replace with enemy collisions
             
-            for (int i = 0; i < rocketsList.Count; i++) {
+            for (int i = 0; i < rocketsList.Count; i++)
+                RocketVsScreenTopCollisionHandler(i);
+
+            for (int i = 0; i < rocketsList.Count; i++)
                 RocketVsEnemyCollisionHandler(i);
-            }
-            
 
             // (2) Player collisions
 
 
         }
 
-        private void RocketVsEnemyCollisionHandler(int index) {
-            // collision with container borders 
-            if (rocketsList[index].Position.Y > 500) { //this.ContentSize.Height)
-                System.Diagnostics.Debug.WriteLine(rocketsList[index].Position.Y);
-
-                //Task.Run(() => {
-                //        rocketsList[index].Explode();
-                //    }); //.ContinueWith(t => { rocketsList[index].Erase(); });
-
+        private void RocketVsScreenTopCollisionHandler(int index) {
+            if (rocketsList[index].Position.Y > this.ContentSize.Height) {
                 Monitor.Enter(rocketsList);
-                rocketsList[index].Explode();
+                rocketsList[index].Erase();
                 rocketsList.RemoveAt(index);
                 Monitor.Exit(rocketsList);
-
-                // CCAudioEngine.SharedEngine.PlayEffect("RocketExplosion");
-                // System.Diagnostics.Debug.WriteLine(this.ChildrenCount);
             }
+        }
 
-            /*
-            for (int i = 0; i < alienInvadersListSize; i++)
-            {
-                if (rocketsList[index].sprite.TextureRectInPixels.IntersectsRect(alienInvadersList[i].sprite.TextureRectInPixels)) {
-                    rocketsList[index].Explode();
+        private void RocketVsEnemyCollisionHandler(int index) {
+            for (int i = 0; i < alienInvadersList.Count; i++) {
+
+                Monitor.Enter(rocketsList);
+
+                if (rocketsList[index].sprite.BoundingBoxTransformedToWorld.IntersectsRect(alienInvadersList[i].sprite.BoundingBoxTransformedToWorld)) {
+                    rocketsList[index].ExplodeAndErase();
+                    CCSimpleAudioEngine.SharedEngine.PlayEffect("sounds/rocketExplosion");
+                    /* http://soundbible.com/tags-gun.html */
+                    rocketsList.RemoveAt(index);
                 }
+
+                Monitor.Exit(rocketsList);
             }
-            */
         }
 
         private void NewRocketHandler(Rocket rocket) {
             Monitor.Enter(rocketsList);
             rocketsList.Add(rocket);
-
             renderTexture.Sprite.AddChild(rocket);
             Monitor.Exit(rocketsList);
         }
@@ -137,7 +125,7 @@ namespace RocketInvasion
             spaceship.IsLaunchingRockets = false;
         }
 
-        void OnTouchesMoved(System.Collections.Generic.List<CCTouch> touches, CCEvent touchEvent)
+        void OnTouchesMoved(List<CCTouch> touches, CCEvent touchEvent)
         {
             var locationOnScreen = touches[0].Location;
 
@@ -149,3 +137,12 @@ namespace RocketInvasion
     }
 }
 
+// Code snippets:
+
+// System.Diagnostics.Debug.WriteLine("inside game loop");
+
+// System.Threading.Tasks.Task.Delay(1).Wait();
+
+//Task.Run(() => {
+//        rocketsList[index].Explode();
+//    }); //.ContinueWith(t => { rocketsList[index].Erase(); });

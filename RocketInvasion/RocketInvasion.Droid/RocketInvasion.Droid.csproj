@@ -96,6 +96,7 @@
     <AndroidAsset Include="Assets\Content\spaceship.xnb" />
     <AndroidAsset Include="Assets\Content\alienSpaceship.xnb" />
     <AndroidAsset Include="Assets\Content\animations\rocket_explosion.plist" />
+    <AndroidAsset Include="Assets\Content\sounds\rocketExplosion.xnb" />
     <None Include="packages.config" />
     <None Include="Resources\AboutResources.txt" />
     <None Include="Assets\AboutAssets.txt" />
@@ -110,7 +111,6 @@
     <Folder Include="Assets\Content\ld\animations\" />
     <Folder Include="Assets\Content\ld\fonts\" />
     <Folder Include="Assets\Content\ld\images\" />
-    <Folder Include="Assets\Content\sounds\" />
     <Folder Include="Resources\Layout\" />
   </ItemGroup>
   <ItemGroup>

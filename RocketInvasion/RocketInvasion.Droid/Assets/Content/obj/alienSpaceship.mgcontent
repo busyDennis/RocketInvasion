@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PipelineBuildEvent xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-  <SourceFile>C:/Users/###333###/Documents/Projects/RocketInvasion/RocketInvasion/RocketInvasion.Droid/Assets/Content/spaceship.png</SourceFile>
-  <SourceTime>2018-05-11T18:39:14.894586-04:00</SourceTime>
-  <DestFile>C:/Users/###333###/Documents/Projects/RocketInvasion/RocketInvasion/RocketInvasion.Droid/Assets/Content/spaceship.xnb</DestFile>
-  <DestTime>2018-05-11T19:46:38.8599885-04:00</DestTime>
+  <SourceFile>C:/Users/###333###/Documents/Projects/RocketInvasion/RocketInvasion/RocketInvasion.Droid/Assets/Content/alienSpaceship.png</SourceFile>
+  <SourceTime>2018-05-08T02:15:04.3126521-04:00</SourceTime>
+  <DestFile>C:/Users/###333###/Documents/Projects/RocketInvasion/RocketInvasion/RocketInvasion.Droid/Assets/Content/alienSpaceship.xnb</DestFile>
+  <DestTime>2018-05-11T19:46:38.8159551-04:00</DestTime>
   <Importer>TextureImporter</Importer>
   <ImporterTime>2017-03-01T10:05:36-05:00</ImporterTime>
   <Processor>TextureProcessor</Processor>

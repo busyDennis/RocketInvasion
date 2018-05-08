@@ -22,11 +22,6 @@ namespace RocketInvasion
             CCAnimation rocketExplosionAnimation = new CCAnimation(rocketExplosionAnimationFrames, 0.1f);
 
             rocketExplosionAction = new CCAnimate(rocketExplosionAnimation);
-
-
-
-            // rocketExplosionActionState;
-
         }
     }
 }

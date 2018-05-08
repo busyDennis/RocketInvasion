@@ -19,8 +19,20 @@ namespace RocketInvasion.Common.Sprites
         }
 
         public void DrawSprite(String imgFileName) {
-            sprite = new CCSprite(imgFileName);
+            CCTexture2D imgTexture = new CCTexture2D(imgFileName);
+
+            sprite = new CCSprite(imgTexture);
             sprite.Scale = scaleFactor;
+
+            sprite.AnchorPoint = CCPoint.AnchorMiddle;
+
+            // temporary
+            /*
+            CCDrawNode drawNode = new CCDrawNode();
+            drawNode.Position = CCPoint.AnchorMiddle; //new CCPoint(0, 0);
+            drawNode.DrawRect(sprite.BoundingBoxTransformedToWorld, CCColor4B.Blue);
+            this.AddChild(drawNode);
+            */       
 
             this.AddChild(sprite);
         }

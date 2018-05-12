@@ -6,11 +6,11 @@ using CocosSharp;
 
 namespace RocketInvasion.Common.Sprites
 {
-    public class Spaceship : SpriteNode
+    public class Player : SpriteNode
     {
         float timeSinceLastLaunch;
 
-        public Spaceship()
+        public Player()
         {
             this.scaleFactor = 0.7f;
 
@@ -57,5 +57,14 @@ namespace RocketInvasion.Common.Sprites
             }
         }
 
+        public void ExplodeAndErase()
+        {
+            this.VelocityVec.Y = 0;
+
+            this.sprite.Scale = 5.5f;
+            this.sprite.SpriteFrame = Animations.protagonistExplosionAnimationFrames[0];
+
+            this.sprite.RunActionsAsync(Animations.protagonistExplosionAction, new CCCallFunc(this.Erase));
+        }
     }
 }

@@ -96,6 +96,8 @@
     <AndroidAsset Include="Assets\Content\spaceship.xnb" />
     <AndroidAsset Include="Assets\Content\alienSpaceship.xnb" />
     <AndroidAsset Include="Assets\Content\animations\rocket_explosion.plist" />
+    <AndroidAsset Include="Assets\Content\animations\player_explosion.plist" />
+    <AndroidAsset Include="Assets\Content\sounds\playerExplosion.xnb" />
     <AndroidAsset Include="Assets\Content\sounds\rocketExplosion.xnb" />
     <None Include="packages.config" />
     <None Include="Resources\AboutResources.txt" />
@@ -132,6 +134,15 @@
   </ItemGroup>
   <ItemGroup>
     <AndroidAsset Include="Assets\Content\animations\rocket_explosion.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\Content\animations\player_explosion.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\Content\sounds\playerExplosion.wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\Content\sounds\rocketExplosion.wav" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

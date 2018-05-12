@@ -12,20 +12,23 @@ namespace RocketInvasion
     {
         CCRenderTexture renderTexture;
 
-        Spaceship spaceship;
+        Player player;
 
         List<Rocket> rocketsList;
         List<AlienInvader> alienInvadersList;
 
+        bool playerIsInactive;
 
         public IntroLayer() : base(CCColor4B.Black)
         {
             renderTexture = new CCRenderTexture(VisibleBoundsWorldspace.Size, VisibleBoundsWorldspace.Size * 2);
 
-            spaceship = new Spaceship();
+            player = new Player();
 
-            spaceship.Position = new CCPoint(300, 50);
-            spaceship.RocketLaunched += NewRocketHandler;
+            player.Position = new CCPoint(300, 50);
+            player.RocketLaunched += NewRocketHandler;
+
+            playerIsInactive = false;
 
             rocketsList = new List<Rocket>();
 
@@ -40,7 +43,7 @@ namespace RocketInvasion
 
             this.AddChild(renderTexture.Sprite);
 
-            renderTexture.Sprite.AddChild(spaceship);
+            renderTexture.Sprite.AddChild(player);
             renderTexture.Sprite.AddChild(alienInvadersList[0]);
 
             Schedule(GameLoop, 0.02f);
@@ -48,31 +51,24 @@ namespace RocketInvasion
 
         void GameLoop(float frameTimeInSeconds)
         {
-            spaceship.RocketLaunchingActivity(frameTimeInSeconds);
+            player.RocketLaunchingActivity(frameTimeInSeconds);
 
             // Update sprites
-
             for (int i = 0; i < rocketsList.Count; i++) {
                 rocketsList[i].NextFrameUpdate();
             }
-
             for (int i = 0; i < alienInvadersList.Count; i++) {
                 alienInvadersList[i].NextFrameUpdate();
             }
 
-            // Handle collisons
-
-            // (1) Rocket collisions - replace with enemy collisions
-            
+            // Handle collisons            
             for (int i = 0; i < rocketsList.Count; i++)
                 RocketVsScreenTopCollisionHandler(i);
-
             for (int i = 0; i < rocketsList.Count; i++)
-                RocketVsEnemyCollisionHandler(i);
-
-            // (2) Player collisions
-
-
+                RocketVsAlienInvaderCollisionHandler(i);
+            if (!playerIsInactive)
+                for (int i = 0; i < alienInvadersList.Count; i++)
+                    PlayerVsAlienInvaderCollisionHandler(i);
         }
 
         private void RocketVsScreenTopCollisionHandler(int index) {
@@ -84,19 +80,35 @@ namespace RocketInvasion
             }
         }
 
-        private void RocketVsEnemyCollisionHandler(int index) {
+        private void RocketVsAlienInvaderCollisionHandler(int index) {
             for (int i = 0; i < alienInvadersList.Count; i++) {
-
                 Monitor.Enter(rocketsList);
-
+                Monitor.Enter(alienInvadersList);
                 if (rocketsList[index].sprite.BoundingBoxTransformedToWorld.IntersectsRect(alienInvadersList[i].sprite.BoundingBoxTransformedToWorld)) {
                     rocketsList[index].ExplodeAndErase();
                     CCSimpleAudioEngine.SharedEngine.PlayEffect("sounds/rocketExplosion");
-                    /* http://soundbible.com/tags-gun.html */
+                    /* http://soundbible.com/2004-Gun-Shot.html */
                     rocketsList.RemoveAt(index);
                 }
-
                 Monitor.Exit(rocketsList);
+                Monitor.Exit(alienInvadersList);
+            }
+        }
+
+        private void PlayerVsAlienInvaderCollisionHandler(int index)
+        {
+            for (int i = 0; i < alienInvadersList.Count; i++)
+            {
+                if (player.sprite.BoundingBoxTransformedToWorld.IntersectsRect(alienInvadersList[i].sprite.BoundingBoxTransformedToWorld))
+                {
+                    player.ExplodeAndErase();
+                    playerIsInactive = true;
+
+                    CCSimpleAudioEngine.SharedEngine.PlayEffect("sounds/playerExplosion");
+                    /*  */
+
+                    // handlePlayerDeath();
+                }
             }
         }
 
@@ -122,17 +134,21 @@ namespace RocketInvasion
 
         void OnTouchesEnded(List<CCTouch> touches, CCEvent touchEvent)
         {
-            spaceship.IsLaunchingRockets = false;
+            player.IsLaunchingRockets = false;
         }
 
         void OnTouchesMoved(List<CCTouch> touches, CCEvent touchEvent)
         {
             var locationOnScreen = touches[0].Location;
 
-            spaceship.PositionX = locationOnScreen.X;
+            player.PositionX = locationOnScreen.X;
 
-            if (!spaceship.IsLaunchingRockets)
-                spaceship.IsLaunchingRockets = true;
+            if (!player.IsLaunchingRockets)
+                player.IsLaunchingRockets = true;
+        }
+
+        void handlePlayerDeath() {
+            Unschedule(GameLoop);
         }
     }
 }

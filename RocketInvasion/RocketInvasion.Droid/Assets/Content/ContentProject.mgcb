@@ -55,3 +55,9 @@
 /processorParam:Quality=Best
 /build:sounds/Android/rocketExplosion.wav
 
+#begin sounds/Android/playerExplosion.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:sounds/Android/playerExplosion.wav
+

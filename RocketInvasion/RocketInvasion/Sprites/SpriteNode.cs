@@ -45,6 +45,7 @@ namespace RocketInvasion.Common.Sprites
 
         public void Erase() {
             this.RemoveFromParent();
+            this.Dispose();
         }
 
         protected void AnimationActivity(float timeElapsed) {}

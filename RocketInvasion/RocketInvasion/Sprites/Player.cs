@@ -1,5 +1,4 @@
 ﻿using System;
-using RocketInvasion.Common.Sprites;
 
 using CocosSharp;
 
@@ -61,10 +60,9 @@ namespace RocketInvasion.Common.Sprites
         {
             this.VelocityVec.Y = 0;
 
-            this.sprite.Scale = 5.5f;
-            this.sprite.SpriteFrame = Animations.protagonistExplosionAnimationFrames[0];
-
-            this.sprite.RunActionsAsync(Animations.protagonistExplosionAction, new CCCallFunc(this.Erase));
+            this.sprite.Scale = 0.4f; //5.5f;
+            this.sprite.SpriteFrame = Animations.explosion1AnimationFrames[0];
+            this.sprite.RunActionsAsync(Animations.explosion1Action, new CCCallFunc(this.Erase));
         }
     }
 }

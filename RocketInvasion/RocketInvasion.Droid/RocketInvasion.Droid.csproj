@@ -96,9 +96,11 @@
     <AndroidAsset Include="Assets\Content\spaceship.xnb" />
     <AndroidAsset Include="Assets\Content\alienSpaceship.xnb" />
     <AndroidAsset Include="Assets\Content\animations\rocket_explosion.plist" />
-    <AndroidAsset Include="Assets\Content\animations\player_explosion.plist" />
     <AndroidAsset Include="Assets\Content\sounds\playerExplosion.xnb" />
     <AndroidAsset Include="Assets\Content\sounds\rocketExplosion.xnb" />
+    <AndroidAsset Include="Assets\Content\animations\explosion_1.plist" />
+    <AndroidAsset Include="Assets\Content\animations\explosion_2.plist" />
+    <AndroidAsset Include="Assets\Content\animations\explosion_3.plist" />
     <None Include="packages.config" />
     <None Include="Resources\AboutResources.txt" />
     <None Include="Assets\AboutAssets.txt" />
@@ -136,13 +138,19 @@
     <AndroidAsset Include="Assets\Content\animations\rocket_explosion.png" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidAsset Include="Assets\Content\animations\player_explosion.png" />
-  </ItemGroup>
-  <ItemGroup>
     <AndroidAsset Include="Assets\Content\sounds\playerExplosion.wav" />
   </ItemGroup>
   <ItemGroup>
     <AndroidAsset Include="Assets\Content\sounds\rocketExplosion.wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\Content\animations\explosion_1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\Content\animations\explosion_2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\Content\animations\explosion_3.png" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

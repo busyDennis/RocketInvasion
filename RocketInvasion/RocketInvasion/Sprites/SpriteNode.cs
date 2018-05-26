@@ -11,6 +11,9 @@ namespace RocketInvasion.Common.Sprites
 
         protected CCVector2 VelocityVec;
 
+        protected int health;
+
+
         public SpriteNode() {
             scaleFactor = 1.0f;
             VelocityVec = new CCVector2(0, 0);

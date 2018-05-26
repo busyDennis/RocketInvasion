@@ -86,6 +86,7 @@ namespace RocketInvasion
                 Monitor.Enter(alienInvadersList);
                 if (rocketsList[index].sprite.BoundingBoxTransformedToWorld.IntersectsRect(alienInvadersList[i].sprite.BoundingBoxTransformedToWorld)) {
                     rocketsList[index].ExplodeAndErase();
+                    alienInvadersList[i].ExplodeAndErase();
                     CCSimpleAudioEngine.SharedEngine.PlayEffect("sounds/rocketExplosion");
                     /* http://soundbible.com/2004-Gun-Shot.html */
                     rocketsList.RemoveAt(index);
@@ -107,7 +108,7 @@ namespace RocketInvasion
                     CCSimpleAudioEngine.SharedEngine.PlayEffect("sounds/playerExplosion");
                     /*  */
 
-                    // handlePlayerDeath();
+                    // playerDies();
                 }
             }
         }
@@ -147,7 +148,7 @@ namespace RocketInvasion
                 player.IsLaunchingRockets = true;
         }
 
-        void handlePlayerDeath() {
+        void playerDies() {
             Unschedule(GameLoop);
         }
     }

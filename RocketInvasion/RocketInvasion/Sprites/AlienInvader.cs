@@ -21,6 +21,16 @@ namespace RocketInvasion.Common.Sprites
             GameParameters.renderingSurfaceMutex.ReleaseMutex();
         }
 
+        public void ExplodeAndErase()
+        {
+            this.VelocityVec.Y = 0;
+
+            this.sprite.Scale = 3.0f;
+            this.sprite.SpriteFrame = Animations.explosion3AnimationFrames[0];
+
+            this.sprite.RunActionsAsync(Animations.explosion3Action, new CCCallFunc(this.Erase));
+        }
+
         public void LaunchRocket() {
 
         }

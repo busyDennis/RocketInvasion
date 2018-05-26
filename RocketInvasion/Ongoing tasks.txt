@@ -1,0 +1,18 @@
+- Research on potential complications with authorship rights when making a hobby game clone.
+
+- Sprite size proportions for various devices.
+
+- First explosion freezes (bug)
+
+- Trajectories for enemy sprites
+Steps (borrowed from Galaga):
+(1) We choose a group of enemy sprites.
+(2) These enemy sprites start the attack: they follow the same trajectory and launch bombs, then disappear below the low border of the screen.
+(3) Survivors return to their locations from the top border of the screen.
+
+- Animated sprites, including rocket engine flame for player sprite
+
+- Animated background.
+Background examples from games that I know:
+(1) like in SM RPG - perpetually moving animated texture
+

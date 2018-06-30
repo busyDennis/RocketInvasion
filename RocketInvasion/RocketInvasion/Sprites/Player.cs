@@ -11,7 +11,7 @@ namespace RocketInvasion.Common.Sprites
 
         public Player()
         {
-            this.scaleFactor = 0.7f;
+            this.scaleFactor = 0.5f;
 
             IsLaunchingRockets = false;
             timeSinceLastLaunch = 0;

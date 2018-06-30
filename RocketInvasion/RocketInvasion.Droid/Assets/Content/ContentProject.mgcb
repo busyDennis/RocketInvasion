@@ -25,6 +25,74 @@
 /processorParam:TextureFormat=Color
 /build:alienSpaceship.png
 
+#begin animations/explosion_1.plist
+/importer:
+/processor:
+/build:animations/explosion_1.plist
+
+#begin animations/explosion_1.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:animations/explosion_1.png
+
+#begin animations/explosion_2.plist
+/importer:
+/processor:
+/build:animations/explosion_2.plist
+
+#begin animations/explosion_2.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:animations/explosion_2.png
+
+#begin animations/explosion_3.plist
+/importer:
+/processor:
+/build:animations/explosion_3.plist
+
+#begin animations/explosion_3.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:animations/explosion_3.png
+
+#begin animations/rocket_explosion.plist
+/importer:
+/processor:
+/build:animations/rocket_explosion.plist
+
+#begin animations/rocket_explosion.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:animations/rocket_explosion.png
+
 #begin rocket.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -37,6 +105,18 @@
 /processorParam:TextureFormat=Color
 /build:rocket.png
 
+#begin sounds/Android/playerExplosion.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:sounds/Android/playerExplosion.wav
+
+#begin sounds/Android/rocketExplosion.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:sounds/Android/rocketExplosion.wav
+
 #begin spaceship.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -48,16 +128,4 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:spaceship.png
-
-#begin sounds/Android/rocketExplosion.wav
-/importer:WavImporter
-/processor:SoundEffectProcessor
-/processorParam:Quality=Best
-/build:sounds/Android/rocketExplosion.wav
-
-#begin sounds/Android/playerExplosion.wav
-/importer:WavImporter
-/processor:SoundEffectProcessor
-/processorParam:Quality=Best
-/build:sounds/Android/playerExplosion.wav
 

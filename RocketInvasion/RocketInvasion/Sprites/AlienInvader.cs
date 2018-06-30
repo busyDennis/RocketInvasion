@@ -7,8 +7,8 @@ namespace RocketInvasion.Common.Sprites
         private CCAffineTransform affineTransform = new CCAffineTransform();
 
         public AlienInvader() {
-            this.scaleFactor = 0.5f;
-            this.VelocityVec = GameParameters.alienInvaderVelocity;
+            this.scaleFactor = 0.3f;
+            this.VelocityVec = GameParameters.zeroVelocity;
 
             affineTransform.Rotation = 0;
 
@@ -31,7 +31,7 @@ namespace RocketInvasion.Common.Sprites
             this.sprite.RunActionsAsync(Animations.explosion3Action, new CCCallFunc(this.Erase));
         }
 
-        public void LaunchRocket() {
+        public void LaunchBomb() {
 
         }
     }

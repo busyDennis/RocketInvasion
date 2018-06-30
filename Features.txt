@@ -1,0 +1,29 @@
+GAME FEAURES
+================================================================================================
+ALIEN SPRITES
+
+Alien sprite "behavior" was copieded from Galaga.
+
+Attack by an individual alien:
+(1) Alien spaceship follows predefined trajectory.
+(2) In close proximity from the player alien follows the player.
+
+Attack by a group of aliens:
+(1) A group of enemy sprites moves as a cluster.
+(2) These enemy group start the attack: they follow the same trajectory and launch bombs, then disappear below the low border of the screen.
+(3) Survivors return to their locations from the top border of the screen.
+-----------------------------------------------------------------------------------------------
+ANIMAIONS
+
+- Animated sprites, including rocket engine flame for player sprite
+- Animated background.
+Background examples from games that I know:
+(1) like in SM RPG - perpetually moving animated texture
+-----------------------------------------------------------------------------------------------
+DEVICE COMPATIBILITY
+
+- Sprite size proportions for various devices.
+-----------------------------------------------------------------------------------------------
+OTHER
+
+- Research on potential complications with authorship rights when making a hobby game clone.

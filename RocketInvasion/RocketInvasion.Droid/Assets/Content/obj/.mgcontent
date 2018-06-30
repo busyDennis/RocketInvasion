@@ -4,10 +4,14 @@
   <Platform>Android</Platform>
   <Config />
   <SourceFiles>
-    <File>C:/Users/###333###/Documents/Projects/RocketInvasion/RocketInvasion/RocketInvasion.Droid/Assets/Content/alienSpaceship.png</File>
-    <File>C:/Users/###333###/Documents/Projects/RocketInvasion/RocketInvasion/RocketInvasion.Droid/Assets/Content/rocket.png</File>
-    <File>C:/Users/###333###/Documents/Projects/RocketInvasion/RocketInvasion/RocketInvasion.Droid/Assets/Content/spaceship.png</File>
-    <File>C:/Users/###333###/Documents/Projects/RocketInvasion/RocketInvasion/RocketInvasion.Droid/Assets/Content/sounds/Android/rocketExplosion.wav</File>
-    <File>C:/Users/###333###/Documents/Projects/RocketInvasion/RocketInvasion/RocketInvasion.Droid/Assets/Content/sounds/Android/playerExplosion.wav</File>
+    <File>C:/Users/V/source/repos/RocketInvasion/RocketInvasion/RocketInvasion.Droid/Assets/Content/alienSpaceship.png</File>
+    <File>C:/Users/V/source/repos/RocketInvasion/RocketInvasion/RocketInvasion.Droid/Assets/Content/animations/explosion_1.png</File>
+    <File>C:/Users/V/source/repos/RocketInvasion/RocketInvasion/RocketInvasion.Droid/Assets/Content/animations/explosion_2.png</File>
+    <File>C:/Users/V/source/repos/RocketInvasion/RocketInvasion/RocketInvasion.Droid/Assets/Content/animations/explosion_3.png</File>
+    <File>C:/Users/V/source/repos/RocketInvasion/RocketInvasion/RocketInvasion.Droid/Assets/Content/animations/rocket_explosion.png</File>
+    <File>C:/Users/V/source/repos/RocketInvasion/RocketInvasion/RocketInvasion.Droid/Assets/Content/rocket.png</File>
+    <File>C:/Users/V/source/repos/RocketInvasion/RocketInvasion/RocketInvasion.Droid/Assets/Content/sounds/Android/playerExplosion.wav</File>
+    <File>C:/Users/V/source/repos/RocketInvasion/RocketInvasion/RocketInvasion.Droid/Assets/Content/sounds/Android/rocketExplosion.wav</File>
+    <File>C:/Users/V/source/repos/RocketInvasion/RocketInvasion/RocketInvasion.Droid/Assets/Content/spaceship.png</File>
   </SourceFiles>
 </SourceFileCollection>

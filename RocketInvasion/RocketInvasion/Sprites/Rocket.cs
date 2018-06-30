@@ -6,7 +6,7 @@ namespace RocketInvasion.Common.Sprites
     public class Rocket : SpriteNode
     {
         public Rocket() {
-            this.scaleFactor = 0.3f;
+            this.scaleFactor = 0.2f;
             this.VelocityVec = GameParameters.rocketVelocity;
 
             base.DrawSprite("rocket");

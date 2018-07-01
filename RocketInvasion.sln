@@ -11,6 +11,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RocketInvasion.iOS", "Rocke
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{CB07A792-41B6-4C77-A5B9-CBE352CA4B1E}"
 	ProjectSection(SolutionItems) = preProject
+		Features.txt = Features.txt
 		RocketInvasion\Ongoing tasks.txt = RocketInvasion\Ongoing tasks.txt
 		README.md = README.md
 	EndProjectSection

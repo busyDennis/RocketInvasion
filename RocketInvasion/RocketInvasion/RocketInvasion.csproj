@@ -37,9 +37,14 @@
     <Compile Include="GameParameters.cs" />
     <Compile Include="IntroLayer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Sprites\AlienHive.cs" />
     <Compile Include="Sprites\AlienInvader.cs" />
+    <Compile Include="Sprites\AlienInvadersRocket.cs" />
+    <Compile Include="Sprites\PlayerLifeHpDisplay.cs" />
+    <Compile Include="Sprites\PlayersRocket.cs" />
     <Compile Include="Sprites\Rocket.cs" />
     <Compile Include="Sprites\Player.cs" />
+    <Compile Include="Sprites\Spaceship.cs" />
     <Compile Include="Sprites\SpriteNode.cs" />
   </ItemGroup>
   <ItemGroup>

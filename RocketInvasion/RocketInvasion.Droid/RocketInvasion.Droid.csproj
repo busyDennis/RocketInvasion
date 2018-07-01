@@ -101,6 +101,10 @@
     <AndroidAsset Include="Assets\Content\animations\explosion_1.plist" />
     <AndroidAsset Include="Assets\Content\animations\explosion_2.plist" />
     <AndroidAsset Include="Assets\Content\animations\explosion_3.plist" />
+    <AndroidAsset Include="Assets\Content\animations\bomb_gimped.xnb" />
+    <AndroidAsset Include="Assets\Content\animations\bomb_gimped.plist" />
+    <AndroidAsset Include="Assets\Content\aliendropping0001.xnb" />
+    <AndroidAsset Include="Assets\Content\ContentProject.mgcb" />
     <None Include="packages.config" />
     <None Include="Resources\AboutResources.txt" />
     <None Include="Assets\AboutAssets.txt" />
@@ -151,6 +155,9 @@
   </ItemGroup>
   <ItemGroup>
     <AndroidAsset Include="Assets\Content\animations\explosion_3.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\Content\animations\bomb_gimped.png" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

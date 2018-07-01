@@ -7,11 +7,11 @@ namespace RocketInvasion.Common.Sprites
     public class SpriteNode : CCNode
     {
         public CCSprite sprite;
-        protected float scaleFactor;
+        public float scaleFactor { get; set;  }
 
         protected CCVector2 VelocityVec;
 
-        protected int health;
+        public String imgFileName { get; set;  }
 
 
         public SpriteNode() {
@@ -22,36 +22,37 @@ namespace RocketInvasion.Common.Sprites
         }
 
         public void DrawSprite(String imgFileName) {
+            this.imgFileName = imgFileName;
+
             CCTexture2D imgTexture = new CCTexture2D(imgFileName);
 
             sprite = new CCSprite(imgTexture);
             sprite.Scale = scaleFactor;
 
-            sprite.AnchorPoint = CCPoint.AnchorMiddle;
-
-            // temporary
-            /*
-            CCDrawNode drawNode = new CCDrawNode();
-            drawNode.Position = CCPoint.AnchorMiddle; //new CCPoint(0, 0);
-            drawNode.DrawRect(sprite.BoundingBoxTransformedToWorld, CCColor4B.Blue);
-            this.AddChild(drawNode);
-            */       
+            sprite.AnchorPoint = CCPoint.AnchorMiddle; 
 
             this.AddChild(sprite);
         }
 
         public void NextFrameUpdate() {
-            GameParameters.renderingSurfaceMutex.WaitOne();
+            GameParameters.RENDERING_SURFACE_MUTEX.WaitOne();
             this.Position += new CCPoint(this.VelocityVec.X, this.VelocityVec.Y);
-            GameParameters.renderingSurfaceMutex.ReleaseMutex();
+            GameParameters.RENDERING_SURFACE_MUTEX.ReleaseMutex();
         }
 
+        public void setVelocity(CCVector2 vec) {
+            this.VelocityVec = vec;
+        }
+
+        protected int HealthPoints { get; set; }
+
         public void Erase() {
+            GameParameters.RENDERING_SURFACE_MUTEX.WaitOne();
             this.RemoveFromParent();
             this.Dispose();
+            GameParameters.RENDERING_SURFACE_MUTEX.ReleaseMutex();
         }
 
         protected void AnimationActivity(float timeElapsed) {}
-
     }
 }

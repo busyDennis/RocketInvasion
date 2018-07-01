@@ -5,62 +5,36 @@ using CocosSharp;
 
 namespace RocketInvasion.Common.Sprites
 {
-    public class Player : SpriteNode
+    public class Player : Spaceship
     {
-        float timeSinceLastLaunch;
+        public int lives { get; set; }
+        public int healthPoints { get; set; }
 
         public Player()
         {
-            this.scaleFactor = 0.5f;
+            this.scaleFactor = GameParameters.PLAYER_PIC_SCALE_FACTOR;
+            this.IntervalBetweenRocketLaunches = GameParameters.INTERVAL_BETWEEN_PLAYERS_ROCKET_LAUNCHES;
 
-            IsLaunchingRockets = false;
-            timeSinceLastLaunch = 0;
+            lives = 3;
+            healthPoints = 100;
 
             base.DrawSprite("spaceship");
         }
 
-        public void LaunchRocket()
+        public override void LaunchRocket()
         {
-            Rocket rocket = new Rocket();
-
+            Rocket rocket = new PlayersRocket(); 
             rocket.Position = new CCPoint(this.PositionX, this.PositionY + 80);
 
             RocketLaunched(rocket);
         }
 
-        public Action<Rocket> RocketLaunched;
-
-        public bool IsLaunchingRockets
-        {
-            get;
-            set;
-        }
-
-        public void RocketLaunchingActivity(float frameTime)
-        {
-            if (!this.IsLaunchingRockets)
-            {
-                timeSinceLastLaunch = 0;
-                return;
-            }
-
-            timeSinceLastLaunch += frameTime;
-
-            if (timeSinceLastLaunch == 0)
-                LaunchRocket();
-            if (timeSinceLastLaunch > GameParameters.intervalBetweenRocketLaunches)
-            {
-                timeSinceLastLaunch -= GameParameters.intervalBetweenRocketLaunches;
-
-                LaunchRocket();
-            }
-        }
-
         public void ExplodeAndErase()
         {
             this.VelocityVec.Y = 0;
+            this.sprite.StopAllActions();
 
-            this.sprite.Scale = 0.4f; //5.5f;
+            this.sprite.Scale = 0.3f;
             this.sprite.SpriteFrame = Animations.explosion1AnimationFrames[0];
             this.sprite.RunActionsAsync(Animations.explosion1Action, new CCCallFunc(this.Erase));
         }

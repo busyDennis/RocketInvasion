@@ -2,23 +2,28 @@
 
 namespace RocketInvasion.Common.Sprites
 {
-    public class AlienInvader : SpriteNode
+    public class AlienInvader : Spaceship
     {
         private CCAffineTransform affineTransform = new CCAffineTransform();
 
         public AlienInvader() {
-            this.scaleFactor = 0.3f;
-            this.VelocityVec = GameParameters.zeroVelocity;
+            this.scaleFactor = GameParameters.ALIEN_INVADER_PIC_SCALE_FACTOR;
+            this.VelocityVec = GameParameters.ZERO_VELOCITY;
+            this.IsAttacking = false;
 
             affineTransform.Rotation = 0;
+            this.IntervalBetweenRocketLaunches = GameParameters.INTERVAL_BETWEEN_ALIEN_INVADER_ROCKET_LAUNCHES;
 
             base.DrawSprite("alienSpaceship");
         }
 
-        new public void NextFrameUpdate() {
-            GameParameters.renderingSurfaceMutex.WaitOne();
-            this.Position += new CCPoint(this.VelocityVec.X, this.VelocityVec.Y);
-            GameParameters.renderingSurfaceMutex.ReleaseMutex();
+        public override void LaunchRocket()
+        {
+            Rocket rocket = new AlienInvadersRocket();
+
+            rocket.Position = new CCPoint(this.PositionX, this.PositionY - 50);
+
+            RocketLaunched(rocket);
         }
 
         public void ExplodeAndErase()
@@ -31,8 +36,10 @@ namespace RocketInvasion.Common.Sprites
             this.sprite.RunActionsAsync(Animations.explosion3Action, new CCCallFunc(this.Erase));
         }
 
-        public void LaunchBomb() {
-
+        public bool IsAttacking
+        {
+            get;
+            set;
         }
     }
 }

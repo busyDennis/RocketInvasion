@@ -4,7 +4,9 @@
   <Platform>Android</Platform>
   <Config />
   <SourceFiles>
+    <File>C:/Users/V/source/repos/RocketInvasion/RocketInvasion/RocketInvasion.Droid/Assets/Content/aliendropping0001.png</File>
     <File>C:/Users/V/source/repos/RocketInvasion/RocketInvasion/RocketInvasion.Droid/Assets/Content/alienSpaceship.png</File>
+    <File>C:/Users/V/source/repos/RocketInvasion/RocketInvasion/RocketInvasion.Droid/Assets/Content/animations/bomb_gimped.png</File>
     <File>C:/Users/V/source/repos/RocketInvasion/RocketInvasion/RocketInvasion.Droid/Assets/Content/animations/explosion_1.png</File>
     <File>C:/Users/V/source/repos/RocketInvasion/RocketInvasion/RocketInvasion.Droid/Assets/Content/animations/explosion_2.png</File>
     <File>C:/Users/V/source/repos/RocketInvasion/RocketInvasion/RocketInvasion.Droid/Assets/Content/animations/explosion_3.png</File>

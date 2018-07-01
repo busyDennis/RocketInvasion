@@ -7,14 +7,16 @@ namespace RocketInvasion
     public static class Animations
     {
         public static CCSpriteSheet rocketExplosionSpriteSheet,
-            explosion1SpriteSheet, explosion2SpriteSheet, explosion3SpriteSheet;
+            explosion1SpriteSheet, explosion2SpriteSheet, explosion3SpriteSheet, alienBombSpriteSheet;
         public static List<CCSpriteFrame> rocketExplosionAnimationFrames,
-            explosion1AnimationFrames, explosion2AnimationFrames, explosion3AnimationFrames;
+            explosion1AnimationFrames, explosion2AnimationFrames, explosion3AnimationFrames, alienBombAnimationFrames;
         public static CCFiniteTimeAction rocketExplosionAction,
-            explosion1Action, explosion2Action, explosion3Action;
-
+            explosion1Action, explosion2Action, explosion3Action, alienBombAction;
+        public static CCAnimation alienBombAnimation;
 
         public static void Init() {
+            // EXPLOSIONS
+
             // rocket explosion animation
             rocketExplosionSpriteSheet = new CCSpriteSheet("animations/rocket_explosion.plist", "animations/rocket_explosion.xnb");
             rocketExplosionAnimationFrames = rocketExplosionSpriteSheet.Frames.FindAll(x => x.TextureFilename.StartsWith("frame"));
@@ -38,6 +40,14 @@ namespace RocketInvasion
             explosion3AnimationFrames = explosion3SpriteSheet.Frames.FindAll(x => x.TextureFilename.StartsWith("frame"));
             CCAnimation explosion3Animation = new CCAnimation(explosion3AnimationFrames, 0.12f);
             explosion3Action = new CCAnimate(explosion3Animation);
+
+
+            // Alien bomb
+            alienBombSpriteSheet = new CCSpriteSheet("animations/bomb_gimped.plist", "animations/bomb_gimped.xnb");
+            alienBombAnimationFrames = alienBombSpriteSheet.Frames.FindAll(x => x.TextureFilename.StartsWith("frame"));
+            alienBombAnimation = new CCAnimation(alienBombAnimationFrames, 0.08f);
+            alienBombAction = new CCRepeatForever(new CCAnimate(alienBombAnimation));
+            // alienBombAction = new CCAnimate(alienBombAnimation);
         }
     }
 }

@@ -13,6 +13,18 @@
 
 #---------------------------------- Content ---------------------------------#
 
+#begin aliendropping0001.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:aliendropping0001.png
+
 #begin alienSpaceship.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -24,6 +36,28 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:alienSpaceship.png
+
+#begin animations/bomb_gimped.plist
+/importer:
+/processor:
+/build:animations/bomb_gimped.plist
+
+#begin animations/bomb_gimped.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:animations/bomb_gimped.png
+
+#begin animations/bomb_gimped.xnb
+/importer:
+/processor:
+/build:animations/bomb_gimped.xnb
 
 #begin animations/explosion_1.plist
 /importer:

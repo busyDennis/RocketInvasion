@@ -6,7 +6,7 @@ Alien sprite "behavior" was copieded from Galaga.
 
 Attack by an individual alien:
 (1) Alien spaceship follows predefined trajectory.
-(2) In close proximity from the player alien follows the player.
+(2) In close proximity alien follows the player.
 
 Attack by a group of aliens:
 (1) A group of enemy sprites moves as a cluster.

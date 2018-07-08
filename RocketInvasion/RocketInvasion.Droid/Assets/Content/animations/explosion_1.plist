@@ -165,14 +165,14 @@
 	<dict>
 		<key>format</key>
 		<integer>2</integer>
-		<key>size</key>
-		<string>{256,256}</string>
 		<key>smartupdate</key>
 		<string>$TexturePacker:SmartUpdate:c63ac17999f746ee253cb9e63215058f:7b9d55d9c4db1e73987b80a4545fa776:c408e1678cc8476d89ba18c5256b3484$</string>
+		<key>size</key>
+		<string>{7680,3240}</string>
 		<key>realTextureFileName</key>
-		<string>player_explosion.png</string>
+		<string>explosion_1.xnb</string>
 		<key>textureFileName</key>
-		<string>player_explosion.png</string>
+		<string>explosion_1.xnb</string>
 	</dict>
 </dict>
 </plist>

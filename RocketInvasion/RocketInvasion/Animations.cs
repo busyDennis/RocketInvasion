@@ -21,26 +21,25 @@ namespace RocketInvasion
             rocketExplosionSpriteSheet = new CCSpriteSheet("animations/rocket_explosion.plist", "animations/rocket_explosion.xnb");
             rocketExplosionAnimationFrames = rocketExplosionSpriteSheet.Frames.FindAll(x => x.TextureFilename.StartsWith("frame"));
             CCAnimation rocketExplosionAnimation = new CCAnimation(rocketExplosionAnimationFrames, 0.1f);
-            rocketExplosionAction = new CCAnimate(rocketExplosionAnimation);
+            rocketExplosionAction = new CCRepeat(new CCAnimate(rocketExplosionAnimation), 1);
 
             // explosion_1 animation
             explosion1SpriteSheet = new CCSpriteSheet("animations/explosion_1.plist", "animations/explosion_1.xnb");
             explosion1AnimationFrames = explosion1SpriteSheet.Frames.FindAll(x => x.TextureFilename.StartsWith("frame"));
             CCAnimation explosion1Animation = new CCAnimation(explosion1AnimationFrames, 0.1f);
-            explosion1Action = new CCAnimate(explosion1Animation);
+            explosion1Action = new CCRepeat(new CCAnimate(explosion1Animation), 1);
 
             // explosion_2 animation
             explosion2SpriteSheet = new CCSpriteSheet("animations/explosion_2.plist", "animations/explosion_2.xnb");
             explosion2AnimationFrames = explosion2SpriteSheet.Frames.FindAll(x => x.TextureFilename.StartsWith("frame"));
             CCAnimation explosion2Animation = new CCAnimation(explosion2AnimationFrames, 0.1f);
-            explosion2Action = new CCAnimate(explosion2Animation);
+            explosion2Action = new CCRepeat(new CCAnimate(explosion2Animation), 1);
 
             // explosion_3 animation
             explosion3SpriteSheet = new CCSpriteSheet("animations/explosion_3.plist", "animations/explosion_3.xnb");
             explosion3AnimationFrames = explosion3SpriteSheet.Frames.FindAll(x => x.TextureFilename.StartsWith("frame"));
             CCAnimation explosion3Animation = new CCAnimation(explosion3AnimationFrames, 0.12f);
-            explosion3Action = new CCAnimate(explosion3Animation);
-
+            explosion3Action = new CCRepeat(new CCAnimate(explosion3Animation), 1);
 
             // Alien bomb
             alienBombSpriteSheet = new CCSpriteSheet("animations/bomb_gimped.plist", "animations/bomb_gimped.xnb");

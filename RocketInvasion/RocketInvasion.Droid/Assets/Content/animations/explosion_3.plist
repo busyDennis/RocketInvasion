@@ -222,9 +222,9 @@
 		<key>smartupdate</key>
 		<string>$TexturePacker:SmartUpdate:c63ac17999f746ee253cb9e63215058f:7b9d55d9c4db1e73987b80a4545fa776:c408e1678cc8476d89ba18c5256b3484$</string>
 		<key>realTextureFileName</key>
-		<string>player_explosion.png</string>
+		<string>player_explosion.xnb</string>
 		<key>textureFileName</key>
-		<string>player_explosion.png</string>
+		<string>player_explosion.xnb</string>
 	</dict>
 </dict>
 </plist>

@@ -1,4 +1,5 @@
 ﻿using CocosSharp;
+
 using System;
 
 
@@ -46,9 +47,10 @@ namespace RocketInvasion.Common.Sprites
 
         protected int HealthPoints { get; set; }
 
-        public void Erase() {
+        public void Erase() {            
             GameParameters.RENDERING_SURFACE_MUTEX.WaitOne();
             this.RemoveFromParent();
+            this.RemoveAllListeners();
             this.Dispose();
             GameParameters.RENDERING_SURFACE_MUTEX.ReleaseMutex();
         }

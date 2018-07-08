@@ -5,7 +5,8 @@ using System.Threading;
 
 
 using RocketInvasion.Common.Sprites;
-
+using System.Diagnostics;
+using System.Threading.Tasks;
 
 namespace RocketInvasion
 {
@@ -14,15 +15,16 @@ namespace RocketInvasion
         CCRenderTexture renderTexture;
 
         Player player;
-
-        List<Rocket> playersRocketList, alienInvadersRocketList;
+        bool playerIsInactive;
 
         AlienHive alienHive;
         //List<AlienInvader> alienHive.AlienInvadersList;
 
         int alienAttackMillis;
 
-        bool playerIsInactive;
+        List<Rocket> playersRocketList, alienInvadersRocketList;
+
+        PlayerLifeHpDisplayNode playerLifeHpDisplay;
 
         public IntroLayer() : base(CCColor4B.Black)
         {
@@ -32,7 +34,7 @@ namespace RocketInvasion
 
             player = new Player();
 
-            player.Position = new CCPoint(300, 50);
+            player.Position = GameParameters.PLAYER_POSITION;
             player.RocketLaunched += NewRocketHandler;
 
             playerIsInactive = false;
@@ -57,6 +59,9 @@ namespace RocketInvasion
             alienHive = new AlienHive(this.ContentSize, NewRocketHandler);
             //alienHive.AlienInvadersList = new List<AlienInvader>();
 
+            playerLifeHpDisplay = new PlayerLifeHpDisplayNode(ref  player);
+            playerLifeHpDisplay.Position = new CCPoint(this.ContentSize.Width, this.ContentSize.Height);
+
             renderTexture.BeginWithClear(CCColor4B.Transparent);
             this.Visit();
             renderTexture.End();
@@ -67,6 +72,8 @@ namespace RocketInvasion
 
             foreach (AlienInvader enemy in alienHive.AlienInvadersList)
                 renderTexture.Sprite.AddChild(enemy);
+
+            renderTexture.Sprite.AddChild(playerLifeHpDisplay);
 
             Schedule(GameLoop, 0.02f);
         }
@@ -93,11 +100,14 @@ namespace RocketInvasion
                 RocketVsScreenTopCollisionHandler(i);
             for (int i = 0; i < playersRocketList.Count; i++)
                 RocketVsAlienInvaderCollisionHandler(i);
-            for (int i = 0; i < alienInvadersRocketList.Count; i++)
-                PlayerVsAliensRocketCollisionHandler(i);
+
             if (!playerIsInactive)
+            {
+                for (int i = 0; i < alienInvadersRocketList.Count; i++)
+                    PlayerVsAliensRocketCollisionHandler(i);
                 for (int i = 0; i < alienHive.AlienInvadersList.Count; i++)
                     PlayerVsAlienInvaderCollisionHandler(i);
+            }
 
             if (alienAttackMillis > GameParameters.INTERVAL_BETWEEN_ALIEN_INVADER_ATTACKS_MS) {
                 alienAttackMillis = 0;
@@ -163,7 +173,7 @@ namespace RocketInvasion
                 alienInvadersRocketList[index].ExplodeAndErase();
                 alienInvadersRocketList.RemoveAt(index);
 
-                playerDies();
+                PlayerDies();
             }
 
             Monitor.Exit(alienInvadersRocketList);
@@ -178,7 +188,7 @@ namespace RocketInvasion
                     alienHive.AlienInvadersList[i].ExplodeAndErase();
                     alienHive.AlienInvadersList.RemoveAt(i);
 
-                    playerDies();
+                    PlayerDies();
                 }
             }
         }
@@ -232,13 +242,57 @@ namespace RocketInvasion
             }
         }
 
-        void playerDies() {
+        void PlayerDies() {
             playerIsInactive = true;
-            player.ExplodeAndErase();
 
-            CCSimpleAudioEngine.SharedEngine.PlayEffect("sounds/playerExplosion");
+            // we run this on separate thread so that we could pause before player revival
 
-            Unschedule(GameLoop);
+            /*
+            Task.Run(() => {
+                handlePlayerDeath();
+            });*/
+
+            
+            player.Explode(handlePlayerDeath);
+        }
+
+        private void handlePlayerDeath()
+        {
+            player.ResetToOriginalSprite(false);
+            //player.Visibility = false;
+
+            // temp
+            System.Diagnostics.Debug.WriteLine("player.Lives: " + player.Lives);
+
+            // update player life counter
+            if (player.Lives > 0)
+            {
+                // update player life counter
+                player.Lives = player.Lives - 1;
+                playerLifeHpDisplay.UpdateSpriteHolder();
+                playerLifeHpDisplay.DrawSprite();
+            }
+
+            // temp
+            System.Diagnostics.Debug.WriteLine("player.Lives after the update: " + player.Lives);
+
+            // revive the player
+            if (player.Lives > 0) {
+                // clean up explosion trace
+                // player.StopAllActions();
+
+                // pause before the player revives
+                System.Threading.Tasks.Task.Delay(3000).Wait();
+
+                // revive the player
+                player.Position = GameParameters.PLAYER_POSITION;
+                player.Visibility = true;
+                playerIsInactive = false;
+            } else // game over
+            {
+                Unschedule(GameLoop);
+            }
+
         }
     }
 }
@@ -252,3 +306,8 @@ namespace RocketInvasion
 //Task.Run(() => {
 //        playersRocketList[index].Explode();
 //    }); //.ContinueWith(t => { playersRocketList[index].Erase(); });
+
+//Stopwatch sw = new Stopwatch(); // sw cotructor
+//sw.Start();
+//while (sw.ElapsedMilliseconds < 5000) ;
+//sw.Stop();

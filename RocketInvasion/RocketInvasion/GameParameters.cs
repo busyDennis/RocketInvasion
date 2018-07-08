@@ -7,8 +7,13 @@ namespace RocketInvasion
     {
         // variables relevant to Player
 
-        public static float PLAYER_PIC_SCALE_FACTOR = 0.5f;
-        public static float PLAYERS_ROCKET_PIC_SCALE_FACTOR = 2.0f;
+        public const float PLAYER_PIC_SCALE_FACTOR = 0.5f;
+        public const float PLAYERS_ROCKET_PIC_SCALE_FACTOR = 2.0f;
+        public const float PLAYER_EXPLOSION_SCALE_FACTOR = 0.3f;
+
+        public const float PLAYER_INFO_MINI_PIC_SCALE_FACTOR = 0.3f;
+
+        public static CCPoint PLAYER_POSITION = new CCPoint(300, 50);
 
         public static CCVector2 PLAYERS_ROCKET_VELOCITY = new CCVector2 (0, 17);
 
@@ -24,9 +29,9 @@ namespace RocketInvasion
 
         public static CCVector2 ALIEN_INVADERS_ROCKET_VELOCITY = new CCVector2(0, -8);
 
-        public const float INTERVAL_BETWEEN_ALIEN_INVADER_ROCKET_LAUNCHES = 1.8f;
+        public const float INTERVAL_BETWEEN_ALIEN_INVADER_ROCKET_LAUNCHES = 2.0f;
 
-        public const int INTERVAL_BETWEEN_ALIEN_INVADER_ATTACKS_MS = 2000000;
+        public const int INTERVAL_BETWEEN_ALIEN_INVADER_ATTACKS_MS = 3000000;
 
 
         // miscellaneous variables

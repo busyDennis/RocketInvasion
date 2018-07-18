@@ -15,7 +15,7 @@ namespace RocketInvasion
         CCRenderTexture renderTexture;
 
         Player player;
-        bool playerIsInactive;
+        bool playerCannotMove, playerTakesNoDamage;
 
         AlienHive alienHive;
         //List<AlienInvader> alienHive.AlienInvadersList;
@@ -34,10 +34,11 @@ namespace RocketInvasion
 
             player = new Player();
 
-            player.Position = GameParameters.PLAYER_POSITION;
+            player.Position = GameParameters.PLAYER_INITIAL_POSITION;
             player.RocketLaunched += NewRocketHandler;
 
-            playerIsInactive = false;
+            playerCannotMove = false;
+            playerTakesNoDamage = false;
 
             playersRocketList = new List<Rocket>();
             alienInvadersRocketList = new List<Rocket>();
@@ -101,7 +102,7 @@ namespace RocketInvasion
             for (int i = 0; i < playersRocketList.Count; i++)
                 RocketVsAlienInvaderCollisionHandler(i);
 
-            if (!playerIsInactive)
+            if (!playerTakesNoDamage)
             {
                 for (int i = 0; i < alienInvadersRocketList.Count; i++)
                     PlayerVsAliensRocketCollisionHandler(i);
@@ -119,7 +120,7 @@ namespace RocketInvasion
 
         private void launchAlienAttack()
         {
-            // preliminary version: we choose one random alien for an attack
+            // preliminary version: we choose one random alien for attack
 
             if (alienHive.AlienInvadersList.Count == 0)
                 return;
@@ -231,7 +232,7 @@ namespace RocketInvasion
 
         void OnTouchesMoved(List<CCTouch> touches, CCEvent touchEvent)
         {
-            if (!playerIsInactive)
+            if (!playerCannotMove)
             {
                 var locationOnScreen = touches[0].Location;
 
@@ -243,7 +244,8 @@ namespace RocketInvasion
         }
 
         void PlayerDies() {
-            playerIsInactive = true;
+            playerCannotMove = true;
+            playerTakesNoDamage = true;
 
             // we run this on separate thread so that we could pause before player revival
 
@@ -252,13 +254,14 @@ namespace RocketInvasion
                 handlePlayerDeath();
             });*/
 
-            
+
             player.Explode(handlePlayerDeath);
         }
 
         private void handlePlayerDeath()
         {
-            player.ResetToOriginalSprite(false);
+            player.RestoreAndHide();
+            
             //player.Visibility = false;
 
             // temp
@@ -282,13 +285,15 @@ namespace RocketInvasion
                 // player.StopAllActions();
 
                 // pause before the player revives
-                System.Threading.Tasks.Task.Delay(3000).Wait();
+                System.Threading.Tasks.Task.Delay(2000).Wait();
 
                 // revive the player
-                player.Position = GameParameters.PLAYER_POSITION;
-                player.Visibility = true;
-                playerIsInactive = false;
-            } else // game over
+                player.Position = GameParameters.PLAYER_INITIAL_POSITION;
+                playerCannotMove = false;
+                player.EmergeGradually();
+                playerTakesNoDamage = false;
+            }
+            else // game over
             {
                 Unschedule(GameLoop);
             }

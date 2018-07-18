@@ -22,7 +22,9 @@ namespace RocketInvasion.Common.Sprites
 
         public int HealthPoints { get; set; }
 
-        public bool Visibility { get { return this.sprite.Visible; } set { this.sprite.Visible = value; } }
+        public bool IsVisible { get { return this.sprite.Visible; } set { this.sprite.Visible = value; } }
+
+        public bool IsTransparent { get { return this.IsTransparent; } set { this.IsTransparent = value; } }
 
         public override void LaunchRocket()
         {
@@ -32,14 +34,37 @@ namespace RocketInvasion.Common.Sprites
             RocketLaunched(rocket);
         }
 
-        public void ResetToOriginalSprite(bool visibility = true)
+        public void RestoreAndHide()
         {
             this.StopAllActions();
             this.RemoveAllChildren();
 
             this.scaleFactor = GameParameters.PLAYER_PIC_SCALE_FACTOR;
             this.DrawSprite("spaceship");
-            this.sprite.Visible = visibility;
+            this.sprite.Visible = false;
+        }
+
+        public void EmergeGradually() {
+            this.IsVisible = true;
+
+            for (int i = 0; i < 7; i++)
+            {
+                for (byte j = 180; j > 100; j--)
+                {
+                    this.sprite.Opacity = j;
+
+                    System.Threading.Tasks.Task.Delay(1).Wait();
+                }
+
+                for (byte j = 100; j < 180; j++)
+                {
+                    this.sprite.Opacity = j;
+
+                    System.Threading.Tasks.Task.Delay(1).Wait();
+                }
+            }
+
+            this.sprite.Opacity = 255;
         }
 
         public void Explode(Action playerExplosionHandler)
@@ -47,24 +72,15 @@ namespace RocketInvasion.Common.Sprites
             this.StopAllActions();
 
             this.sprite.Scale = GameParameters.PLAYER_EXPLOSION_SCALE_FACTOR;
+            this.sprite.Opacity = 255;
             // this.sprite.SpriteFrame = Animations.explosion1AnimationFrames[0];
 
             CCSimpleAudioEngine.SharedEngine.PlayEffect("sounds/playerExplosion");
             this.sprite.RunActions(Animations.explosion1Action, new CCCallFunc(() => this.PlayerExplosionHandlerOnSeparateThread(playerExplosionHandler)));
 
-            
-
-            //if (playerExplosionHandler != null)
-              //  Task.Run(() => {
-              //      playerExplosionHandler();
-              //  });
-
-
             //this.sprite.RunActionsAsync(new CCCallFunc(this.Erase), new CCCallFunc(playerDeathHandler));
             //else
             //    this.sprite.RunActions(Animations.explosion1Action, new CCCallFunc(this.Erase));
-
-
         }
 
         private void PlayerExplosionHandlerOnSeparateThread(Action playerExplosionHandler)

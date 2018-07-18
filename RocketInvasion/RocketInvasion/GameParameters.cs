@@ -13,7 +13,7 @@ namespace RocketInvasion
 
         public const float PLAYER_INFO_MINI_PIC_SCALE_FACTOR = 0.3f;
 
-        public static CCPoint PLAYER_POSITION = new CCPoint(300, 50);
+        public static CCPoint PLAYER_INITIAL_POSITION = new CCPoint(350, 50);
 
         public static CCVector2 PLAYERS_ROCKET_VELOCITY = new CCVector2 (0, 17);
 

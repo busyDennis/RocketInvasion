@@ -25,4 +25,3 @@ C:\Users\V\source\repos\RocketInvasion\RocketInvasion\RocketInvasion\obj\Debug\R
 C:\Users\V\source\repos\RocketInvasion\RocketInvasion\RocketInvasion\obj\Debug\RocketInvasion.csproj.CopyComplete
 C:\Users\V\source\repos\RocketInvasion\RocketInvasion\RocketInvasion\obj\Debug\RocketInvasion.dll
 C:\Users\V\source\repos\RocketInvasion\RocketInvasion\RocketInvasion\obj\Debug\RocketInvasion.pdb
-C:\Users\V\source\repos\RocketInvasion\RocketInvasion\RocketInvasion\obj\Debug\RocketInvasion.csprojAssemblyReference.cache

@@ -3,14 +3,25 @@ using Microsoft.Xna.Framework;
 using CocosSharp;
 using CocosDenshion;
 
+using RocketInvasion.Scenes;
+
+
 namespace RocketInvasion
 {
     public class AppDelegate : CCApplicationDelegate
     {
+        static CCWindow mainWindow;
+        static CCDirector sceneDirector;
 
         public override void ApplicationDidFinishLaunching(CCApplication application, CCWindow mainWindow)
         {
+            AppDelegate.mainWindow = mainWindow;
+            sceneDirector = new CCDirector();
+            mainWindow.AddSceneDirector(sceneDirector);
+
             application.ContentRootDirectory = "Content";
+
+
             var windowSize = mainWindow.WindowSizeInPixels;
 
             var desiredWidth = 768.0f;
@@ -35,12 +46,9 @@ namespace RocketInvasion
                 CCSprite.DefaultTexelToContentSizeRatio = 1.0f;
             }
 
-            var scene = new CCScene(mainWindow);
-            var introLayer = new IntroLayer();
+            LoadIntoductionScene();
 
-            scene.AddChild(introLayer);
-
-            mainWindow.RunWithScene(scene);
+            // mainWindow.RunWithScene(scene);
         }
 
         public override void ApplicationDidEnterBackground(CCApplication application)
@@ -51,6 +59,23 @@ namespace RocketInvasion
         public override void ApplicationWillEnterForeground(CCApplication application)
         {
             application.Paused = false;
+        }
+
+        public void LoadIntoductionScene() {
+            var introScreenScene = new IntroductionScene(mainWindow);
+            sceneDirector.ReplaceScene(introScreenScene);
+        }
+
+        public static void StartNewGame()
+        {
+            System.Diagnostics.Debug.WriteLine("***** inside AppDelegate.StartNewGame()");
+
+            var scene = new GameScene(mainWindow);
+            sceneDirector.ReplaceScene(scene);
+        }
+
+        public static void LoadSavedGame() {
+
         }
     }
 }

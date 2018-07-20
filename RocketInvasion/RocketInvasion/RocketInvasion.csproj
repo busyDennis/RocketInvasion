@@ -35,7 +35,9 @@
     <Compile Include="Animations.cs" />
     <Compile Include="AppDelegate.cs" />
     <Compile Include="GameParameters.cs" />
-    <Compile Include="IntroLayer.cs" />
+    <Compile Include="Scenes\GameScene.cs" />
+    <Compile Include="Scenes\IntroductionScene.cs" />
+    <Compile Include="Layers\GameplayLayer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Sprites\AlienHive.cs" />
     <Compile Include="Sprites\AlienInvader.cs" />
@@ -46,6 +48,7 @@
     <Compile Include="Sprites\Player.cs" />
     <Compile Include="Sprites\Spaceship.cs" />
     <Compile Include="Sprites\SpriteNode.cs" />
+    <Compile Include="UIComponents\Button.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="box2d, Version=1.4.0.0, Culture=neutral, processorArchitecture=MSIL">

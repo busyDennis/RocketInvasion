@@ -5,6 +5,25 @@ namespace RocketInvasion
 {
     public static class GameParameters
     {
+        //*********************INTRODUCTORY SCREEN*******************
+
+        public static CCPoint BTN_NEW_GAME_POSITION = new CCPoint(300, 600);
+        public static CCSize BTN_NEW_GAME_DIMENSIONS = new CCSize(250, 90);
+        public static CCColor4B BTN_NEW_GAME_FILL_COLOR = CCColor4B.Yellow;
+        public static CCColor4B BTN_NEW_GAME_BORDER_COLOR = CCColor4B.LightGray;
+        public static CCColor3B BTN_NEW_GAME_TEXT_COLOR = CCColor3B.Black;
+        public static int BTN_NEW_GAME_FONT_SIZE = 50;
+
+        public static CCPoint BTN_LOAD_GAME_POSITION = new CCPoint(300, 400);
+        public static CCSize BTN_LOAD_GAME_DIMENSIONS = new CCSize(250, 90);
+        public static CCColor4B BTN_LOAD_GAME_FILL_COLOR = CCColor4B.Yellow;
+        public static CCColor4B BTN_LOAD_GAME_BORDER_COLOR = CCColor4B.LightGray;
+        public static CCColor3B BTN_LOAD_GAME_TEXT_COLOR = CCColor3B.Black;
+        public static int BTN_LOAD_GAME_FONT_SIZE = 50;
+
+
+        //*************************GAME LEVELS***********************
+
         // variables relevant to Player
 
         public const float PLAYER_PIC_SCALE_FACTOR = 0.5f;

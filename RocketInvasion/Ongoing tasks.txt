@@ -1,6 +1,8 @@
 CURRENT TASKS
 
-Array of alien invaders floats horizontally.
+- Animated background
+
+- Array of alien invaders floats horizontally.
 
 Attack by an individual alien:
 (1) Alien spaceship follows predefined trajectory.
@@ -11,10 +13,3 @@ Speed/time based trajectory
 
 ===============================================================================================
 FIXED ISSUES
-
-7.5.2018
-- Alien invaders launch rockets.
-
-6.30.2018
-- Alien envader sprite destruction lags (bug)
-- First rocket explosion lags because assets are loaded at run time (bug)

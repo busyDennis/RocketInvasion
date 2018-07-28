@@ -1,15 +1,25 @@
 CURRENT TASKS
 
-- Animated background
+(1) Test on device for lags esp. for introductory screen
 
-- Array of alien invaders floats horizontally.
+(2) iOS emulator
 
-Attack by an individual alien:
-(1) Alien spaceship follows predefined trajectory.
+(3) Introductory screen: once the player clicks a button of choice, the button should darken and the whole screen should fade out
 
-Speed/time based trajectory
+(4) Animated background
+- Open space with stars
+- Stars twinkle somehow
 
-(2) In close proximity alien follows the player.
+Implementations:
+(a)
+- find a gif image
+- split it into frames and use perpetual animation
+or
+(b)
+- use pixel animation
+
+(5) More advanced attack by individual alien:
+- Alien spaceship follows predefined (speed/time-based) trajectory
+- In closer proximity alien aims at the player
 
 ===============================================================================================
-FIXED ISSUES

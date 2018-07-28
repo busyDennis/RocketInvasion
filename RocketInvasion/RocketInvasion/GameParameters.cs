@@ -39,7 +39,7 @@ namespace RocketInvasion
         public const float INTERVAL_BETWEEN_PLAYERS_ROCKET_LAUNCHES = 0.5f;
 
 
-        // variables relevant to AlienInvader
+        // variables relevant to AlienInvaders
 
         public static float ALIEN_INVADER_PIC_SCALE_FACTOR = 0.3f;
         public static float ALIEN_INVADERS_ROCKET_PIC_SCALE_FACTOR = 0.5f;
@@ -51,6 +51,8 @@ namespace RocketInvasion
         public const float INTERVAL_BETWEEN_ALIEN_INVADER_ROCKET_LAUNCHES = 2.0f;
 
         public const int INTERVAL_BETWEEN_ALIEN_INVADER_ATTACKS_MS = 3000000;
+
+        public const float ALIEN_HIVE_LR_FLOATING_VELOCITY = 0.7f;
 
 
         // miscellaneous variables

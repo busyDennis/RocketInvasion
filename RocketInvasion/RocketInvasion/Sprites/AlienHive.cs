@@ -1,7 +1,6 @@
-﻿using System;
+﻿using CocosSharp;
+using System;
 using System.Collections.Generic;
-using System.Linq;
-using CocosSharp;
 
 
 namespace RocketInvasion.Common.Sprites
@@ -11,19 +10,18 @@ namespace RocketInvasion.Common.Sprites
         public List<AlienInvader> AlienInvadersList { get; set; }
 
         float xMarginLeft, xMarginRight;
-        CCSize contentSize;
 
-        public bool IsFloatingHorizontally { get; set; }
-        public float FloatVelocity { get; set; }
+        public bool IsLRFloating { get; set; }
+        public float LRFloatingVelocity { get; set; }
+
+        public float PhoneScreenWidthVar { get; set; }
 
 
         public AlienHive(CCSize contentSize, Action<Rocket> alienRocketHandler) {
-            this.FloatVelocity = 0;
+            this.LRFloatingVelocity = 0;
 
             AlienInvadersList = new List<AlienInvader>();
             int alienInvadersCount = 0;
-
-            this.contentSize = contentSize;
 
             for (int j = 940; j <= 1000; j += 60) // height
             {
@@ -37,7 +35,7 @@ namespace RocketInvasion.Common.Sprites
         }
 
         public void NextFrameupdate() {
-            if (this.IsFloatingHorizontally)
+            if (this.IsLRFloating)
             {
                 this.UpdateHiveXMargins();
                 this.UpdateHiveFloatVelocityBasedOnXMargins();
@@ -67,31 +65,31 @@ namespace RocketInvasion.Common.Sprites
         }
 
         public void UpdateHiveFloatVelocityBasedOnXMargins() {
-            if (this.IsFloatingHorizontally) {
-                if (this.FloatVelocity == 0) //start floating
-                    this.FloatVelocity = 0.5f;
-                else if (this.FloatVelocity < 0)
+            if (this.IsLRFloating) {
+                if (this.LRFloatingVelocity == 0) //start floating
+                    this.LRFloatingVelocity = GameParameters.ALIEN_HIVE_LR_FLOATING_VELOCITY;
+                else if (this.LRFloatingVelocity < 0)
                 {
                     if (xMarginLeft < 0)
-                        this.FloatVelocity = 0.5f;
+                        this.LRFloatingVelocity = GameParameters.ALIEN_HIVE_LR_FLOATING_VELOCITY;
                     else
                         return;
                 }
-                else if (this.FloatVelocity > 0)
+                else if (this.LRFloatingVelocity > 0)
                 {
-                    if (xMarginRight > contentSize.Width)
-                        this.FloatVelocity = -0.5f;
+                    if (xMarginRight > this.PhoneScreenWidthVar)
+                        this.LRFloatingVelocity = -GameParameters.ALIEN_HIVE_LR_FLOATING_VELOCITY;
                     else
                         return;
                 }
 
-                UpdateFloatVelocityForEachAlienInvader(this.FloatVelocity);                    
+                UpdateFloatVelocityForEachAlienInvader(this.LRFloatingVelocity);                    
             }
         }
 
         public void UpdateFloatVelocityForEachAlienInvader(float xVel) {
             foreach (AlienInvader alien in AlienInvadersList)
-                alien.Velocity = new CCVector2(xVel, alien.Velocity.X);
+                alien.Velocity = new CCVector2(xVel, alien.Velocity.Y);
         }
 
         // to do:

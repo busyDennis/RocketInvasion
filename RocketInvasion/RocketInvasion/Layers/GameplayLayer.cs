@@ -13,23 +13,24 @@ namespace RocketInvasion.Layers
     public class GameplayLayer : CCLayerColor
     {
         CCRenderTexture renderTexture;
-
         CCSprite background;
 
         Player player;
         bool playerCannotMove, playerTakesNoDamage;
+        PlayerLifeHpDisplayNode playerLifeHpDisplay;
 
         AlienHive alienHive;
-
         int alienAttackMillis;
 
         List<Rocket> playersRocketList, alienInvadersRocketList;
 
-        PlayerLifeHpDisplayNode playerLifeHpDisplay;
 
         public GameplayLayer() : base(CCColor4B.Black)
         {
             Animations.Init();
+
+            System.Diagnostics.Debug.WriteLine("VisibleBoundsWorldspace.Size.ToString(): " + this.ContentSize.ToString());
+
 
             renderTexture = new CCRenderTexture(VisibleBoundsWorldspace.Size, VisibleBoundsWorldspace.Size * 2);
 
@@ -51,10 +52,10 @@ namespace RocketInvasion.Layers
             alienAttackMillis = 0;
 
             alienHive = new AlienHive(this.ContentSize, NewRocketHandler);
-            alienHive.IsFloatingHorizontally = true;
+            alienHive.IsLRFloating = true;
 
-            playerLifeHpDisplay = new PlayerLifeHpDisplayNode(ref  player);
-            playerLifeHpDisplay.Position = new CCPoint(this.ContentSize.Width, this.ContentSize.Height);
+            playerLifeHpDisplay = new PlayerLifeHpDisplayNode(ref player);
+            playerLifeHpDisplay.Position = new CCPoint(VisibleBoundsWorldspace.Size.Width, VisibleBoundsWorldspace.Size.Height);
 
             renderTexture.BeginWithClear(CCColor4B.Transparent);
             this.Visit();
@@ -121,7 +122,7 @@ namespace RocketInvasion.Layers
 
         private void launchAlienAttack()
         {
-            // preliminary version: we choose one random alien for attack
+            // preliminary version: we choose one random alien for a straightforward attack
 
             if (alienHive.AlienInvadersList.Count == 0)
                 return;
@@ -223,6 +224,8 @@ namespace RocketInvasion.Layers
             touchListener.OnTouchesMoved = OnTouchesMoved;
 
             AddEventListener(touchListener, this);
+
+            alienHive.PhoneScreenWidthVar = this.ContentSize.Width;
         }
 
         void OnTouchesEnded(List<CCTouch> touches, CCEvent touchEvent)
@@ -262,8 +265,6 @@ namespace RocketInvasion.Layers
         {
             player.RestoreAndHide();
             
-            //player.Visibility = false;
-
             // temp
             System.Diagnostics.Debug.WriteLine("player.Lives: " + player.Lives);
 

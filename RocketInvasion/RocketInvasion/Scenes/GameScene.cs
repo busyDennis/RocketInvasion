@@ -12,6 +12,7 @@ namespace RocketInvasion.Scenes
         public GameScene(CCWindow window) : base(window)
         {
             gameplayLayer = new GameplayLayer();
+            gameplayLayer.ContentSize = this.ContentSize;
             this.AddChild(gameplayLayer);
         }
     }

@@ -8,16 +8,14 @@ namespace RocketInvasion.Common.Sprites
     public class SpriteNode : CCNode
     {
         public CCSprite sprite;
-        public float scaleFactor { get; set;  }
-
-        protected CCVector2 VelocityVec;
-
-        public String imgFileName { get; set;  }
+        public float scaleFactor { get; set; }
+        public CCVector2 Velocity { get; set; }
+        public String imgFileName { get; set; }
 
 
         public SpriteNode() {
             scaleFactor = 1.0f;
-            VelocityVec = new CCVector2(0, 0);
+            this.Velocity = new CCVector2(0, 0);
 
             Schedule(AnimationActivity);
         }
@@ -37,12 +35,8 @@ namespace RocketInvasion.Common.Sprites
 
         public void NextFrameUpdate() {
             GameParameters.RENDERING_SURFACE_MUTEX.WaitOne();
-            this.Position += new CCPoint(this.VelocityVec.X, this.VelocityVec.Y);
+            this.Position += new CCPoint(this.Velocity.X, this.Velocity.Y);
             GameParameters.RENDERING_SURFACE_MUTEX.ReleaseMutex();
-        }
-
-        public void setVelocity(CCVector2 vec) {
-            this.VelocityVec = vec;
         }
 
         protected int HealthPoints { get; set; }

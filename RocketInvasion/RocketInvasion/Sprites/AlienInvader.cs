@@ -8,7 +8,7 @@ namespace RocketInvasion.Common.Sprites
 
         public AlienInvader() {
             this.scaleFactor = GameParameters.ALIEN_INVADER_PIC_SCALE_FACTOR;
-            this.VelocityVec = GameParameters.ZERO_VELOCITY;
+            this.Velocity = GameParameters.ZERO_VELOCITY;
             this.IsAttacking = false;
 
             affineTransform.Rotation = 0;
@@ -28,7 +28,7 @@ namespace RocketInvasion.Common.Sprites
 
         public void ExplodeAndErase()
         {
-            this.VelocityVec.Y = 0;
+            this.Velocity = new CCVector2(0, 0);
 
             this.sprite.Scale = 3.0f;
             this.sprite.SpriteFrame = Animations.explosion3AnimationFrames[0];

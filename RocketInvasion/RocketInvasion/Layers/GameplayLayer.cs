@@ -20,7 +20,6 @@ namespace RocketInvasion.Layers
         bool playerCannotMove, playerTakesNoDamage;
 
         AlienHive alienHive;
-        //List<AlienInvader> alienHive.AlienInvadersList;
 
         int alienAttackMillis;
 
@@ -38,7 +37,7 @@ namespace RocketInvasion.Layers
             background.Position = new CCPoint(0, 0);
             background.Scale = 5f;
 
-             player = new Player();
+            player = new Player();
 
             player.Position = GameParameters.PLAYER_INITIAL_POSITION;
             player.RocketLaunched += NewRocketHandler;
@@ -51,20 +50,8 @@ namespace RocketInvasion.Layers
 
             alienAttackMillis = 0;
 
-            /*
-            int alienInvaderCount = 0;
-
-            for (int j = 940; j <= 1000; j += 60) {
-                for (int i = 250; i <= 550; i += 60) {
-                    alienHive.AlienInvadersList.Add(new AlienInvader());
-                    alienHive.AlienInvadersList[alienInvaderCount].Position = new CCPoint(i, j);
-                    alienHive.alienHive.AlienInvadersList[alienInvaderCount++].RocketLaunched += NewRocketHandler;
-                }
-            }
-            */
-
             alienHive = new AlienHive(this.ContentSize, NewRocketHandler);
-            //alienHive.AlienInvadersList = new List<AlienInvader>();
+            alienHive.IsFloatingHorizontally = true;
 
             playerLifeHpDisplay = new PlayerLifeHpDisplayNode(ref  player);
             playerLifeHpDisplay.Position = new CCPoint(this.ContentSize.Width, this.ContentSize.Height);
@@ -89,9 +76,12 @@ namespace RocketInvasion.Layers
 
         private void GameLoop(float frameTimeInSeconds)
         {
+            // UPDATE SPRITES
+
+            // update player
             player.RocketLaunchingActivity(frameTimeInSeconds);
 
-            // Update sprites
+            // update rockets
             for (int i = 0; i < playersRocketList.Count; i++) {
                 playersRocketList[i].NextFrameUpdate();
             }
@@ -99,12 +89,15 @@ namespace RocketInvasion.Layers
             {
                 alienInvadersRocketList[i].NextFrameUpdate();
             }
+
+            // update aliens
+            alienHive.NextFrameupdate();
             for (int i = 0; i < alienHive.AlienInvadersList.Count; i++) {
                 alienHive.AlienInvadersList[i].NextFrameUpdate();
                 alienHive.AlienInvadersList[i].RocketLaunchingActivity(frameTimeInSeconds);
             }
 
-            // Handle collisons            
+            // HANDLE COLLISIONS         
             for (int i = 0; i < playersRocketList.Count; i++)
                 RocketVsScreenTopCollisionHandler(i);
             for (int i = 0; i < playersRocketList.Count; i++)
@@ -139,12 +132,11 @@ namespace RocketInvasion.Layers
                 if (!alienHive.AlienInvadersList[i].IsAttacking)
                 {
                     alienHive.AlienInvadersList[i].IsAttacking = true;
-                    alienHive.AlienInvadersList[i].setVelocity(GameParameters.ALIEN_INVADERS_VELOCITY);
+                    alienHive.AlienInvadersList[i].Velocity = GameParameters.ALIEN_INVADERS_VELOCITY;
                     alienHive.AlienInvadersList[i].IsLaunchingRockets = true;
                     return;
                 }
                 Monitor.Exit(alienHive.AlienInvadersList);
-
             }
         }
 

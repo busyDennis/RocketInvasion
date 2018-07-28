@@ -8,14 +8,14 @@ namespace RocketInvasion.Common.Sprites
         public PlayersRocket()
         {
             this.scaleFactor = 0.15f;
-            this.VelocityVec = GameParameters.PLAYERS_ROCKET_VELOCITY;
+            this.Velocity = GameParameters.PLAYERS_ROCKET_VELOCITY;
 
             base.DrawSprite("rocket");
         }
 
         public override void ExplodeAndErase()
         {
-            this.VelocityVec.Y = 0;
+            this.Velocity = new CCVector2(this.Velocity.X, 0);
 
             this.sprite.Scale = GameParameters.PLAYERS_ROCKET_PIC_SCALE_FACTOR;
             this.sprite.SpriteFrame = Animations.rocketExplosionAnimationFrames[0];

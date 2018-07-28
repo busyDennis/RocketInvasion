@@ -14,8 +14,5 @@ namespace RocketInvasion.Scenes
             gameplayLayer = new GameplayLayer();
             this.AddChild(gameplayLayer);
         }
-
-
-
     }
 }

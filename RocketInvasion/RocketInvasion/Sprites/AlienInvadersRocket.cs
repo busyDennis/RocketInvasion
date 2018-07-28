@@ -8,7 +8,7 @@ namespace RocketInvasion.Common.Sprites
         public AlienInvadersRocket()
         {
             this.scaleFactor = GameParameters.ALIEN_INVADERS_ROCKET_PIC_SCALE_FACTOR;
-            this.VelocityVec = GameParameters.ALIEN_INVADERS_ROCKET_VELOCITY;
+            this.Velocity = GameParameters.ALIEN_INVADERS_ROCKET_VELOCITY;
 
             base.DrawSprite("aliendropping0001");
 
@@ -19,7 +19,7 @@ namespace RocketInvasion.Common.Sprites
 
         public override void ExplodeAndErase()
         {
-            this.VelocityVec.Y = 0;
+            this.Velocity = new CCVector2(this.Velocity.X, 0);
             this.sprite.StopAllActions();
 
             this.sprite.Scale = 2.0f;

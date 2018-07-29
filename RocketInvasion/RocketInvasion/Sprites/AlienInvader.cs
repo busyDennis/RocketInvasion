@@ -1,6 +1,6 @@
 ﻿using CocosSharp;
 
-namespace RocketInvasion.Common.Sprites
+namespace RocketInvasion.Sprites
 {
     public class AlienInvader : Spaceship
     {

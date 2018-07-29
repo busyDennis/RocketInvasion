@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 
 
-namespace RocketInvasion.Common.Sprites
+namespace RocketInvasion.Sprites
 {
     class AlienHive : CCNode
     {

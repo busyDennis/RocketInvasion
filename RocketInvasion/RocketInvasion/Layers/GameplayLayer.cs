@@ -3,17 +3,15 @@ using CocosSharp;
 using System.Collections.Generic;
 using System.Threading;
 
+using RocketInvasion.Sprites;
 
-using RocketInvasion.Common.Sprites;
-using System.Diagnostics;
-using System.Threading.Tasks;
 
 namespace RocketInvasion.Layers
 {
     public class GameplayLayer : CCLayerColor
     {
         CCRenderTexture renderTexture;
-        CCSprite background;
+        SpaceBackground background;
 
         Player player;
         bool playerCannotMove, playerTakesNoDamage;
@@ -34,9 +32,7 @@ namespace RocketInvasion.Layers
 
             renderTexture = new CCRenderTexture(VisibleBoundsWorldspace.Size, VisibleBoundsWorldspace.Size * 2);
 
-            background = new CCSprite(new CCTexture2D("spaceBackground.png"));
-            background.Position = new CCPoint(0, 0);
-            background.Scale = 5f;
+            background = new SpaceBackground();
 
             player = new Player();
 
@@ -72,11 +68,15 @@ namespace RocketInvasion.Layers
 
             renderTexture.Sprite.AddChild(playerLifeHpDisplay);
 
-            Schedule(GameLoop, 0.02f);
+            Schedule(GameLoop, GameParameters.ANIMATION_FRAME_CHANGE_INTERVAL); 
         }
 
         private void GameLoop(float frameTimeInSeconds)
         {
+            // UPDATE GRAPHICS
+
+            background.NextFrameUpdate();
+
             // UPDATE SPRITES
 
             // update player
@@ -91,14 +91,15 @@ namespace RocketInvasion.Layers
                 alienInvadersRocketList[i].NextFrameUpdate();
             }
 
-            // update aliens
+            // update alien invaders
             alienHive.NextFrameupdate();
             for (int i = 0; i < alienHive.AlienInvadersList.Count; i++) {
                 alienHive.AlienInvadersList[i].NextFrameUpdate();
                 alienHive.AlienInvadersList[i].RocketLaunchingActivity(frameTimeInSeconds);
             }
 
-            // HANDLE COLLISIONS         
+            // HANDLE COLLISIONS
+
             for (int i = 0; i < playersRocketList.Count; i++)
                 RocketVsScreenTopCollisionHandler(i);
             for (int i = 0; i < playersRocketList.Count; i++)
@@ -298,7 +299,6 @@ namespace RocketInvasion.Layers
             {
                 Unschedule(GameLoop);
             }
-
         }
     }
 }

@@ -46,6 +46,7 @@
     <Compile Include="Sprites\PlayersRocket.cs" />
     <Compile Include="Sprites\Rocket.cs" />
     <Compile Include="Sprites\Player.cs" />
+    <Compile Include="Sprites\SpaceBackground.cs" />
     <Compile Include="Sprites\Spaceship.cs" />
     <Compile Include="Sprites\SpriteNode.cs" />
     <Compile Include="UIComponents\Button.cs" />

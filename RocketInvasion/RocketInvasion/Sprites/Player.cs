@@ -3,7 +3,7 @@ using CocosSharp;
 using System;
 using System.Threading.Tasks;
 
-namespace RocketInvasion.Common.Sprites
+namespace RocketInvasion.Sprites
 {
     public class Player : Spaceship
     {

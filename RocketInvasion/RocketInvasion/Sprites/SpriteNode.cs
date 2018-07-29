@@ -3,7 +3,7 @@
 using System;
 
 
-namespace RocketInvasion.Common.Sprites
+namespace RocketInvasion.Sprites
 {
     public class SpriteNode : CCNode
     {

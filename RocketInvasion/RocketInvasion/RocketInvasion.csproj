@@ -49,6 +49,7 @@
     <Compile Include="Sprites\SpaceBackground.cs" />
     <Compile Include="Sprites\Spaceship.cs" />
     <Compile Include="Sprites\SpriteNode.cs" />
+    <Compile Include="Sprites\Star.cs" />
     <Compile Include="UIComponents\Button.cs" />
   </ItemGroup>
   <ItemGroup>

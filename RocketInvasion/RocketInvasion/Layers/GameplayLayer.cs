@@ -32,7 +32,7 @@ namespace RocketInvasion.Layers
 
             renderTexture = new CCRenderTexture(VisibleBoundsWorldspace.Size, VisibleBoundsWorldspace.Size * 2);
 
-            background = new SpaceBackground();
+            background = new SpaceBackground(VisibleBoundsWorldspace);
 
             player = new Player();
 
@@ -92,7 +92,7 @@ namespace RocketInvasion.Layers
             }
 
             // update alien invaders
-            alienHive.NextFrameupdate();
+            alienHive.NextFrameUpdate();
             for (int i = 0; i < alienHive.AlienInvadersList.Count; i++) {
                 alienHive.AlienInvadersList[i].NextFrameUpdate();
                 alienHive.AlienInvadersList[i].RocketLaunchingActivity(frameTimeInSeconds);
@@ -134,7 +134,9 @@ namespace RocketInvasion.Layers
                 if (!alienHive.AlienInvadersList[i].IsAttacking)
                 {
                     alienHive.AlienInvadersList[i].IsAttacking = true;
-                    alienHive.AlienInvadersList[i].Velocity = GameParameters.ALIEN_INVADERS_VELOCITY;
+
+                    alienHive.AlienInvadersList[i].SetBehaviorStraightToDest(new CCPoint(150, 150), 5);
+
                     alienHive.AlienInvadersList[i].IsLaunchingRockets = true;
                     return;
                 }

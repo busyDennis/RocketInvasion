@@ -41,9 +41,10 @@ namespace RocketInvasion
         public const float ALIEN_HIVE_LR_FLOATING_VELOCITY = 0.7f;
 
         // variables relevant to AlienInvader
-        public static float ALIEN_INVADER_PIC_SCALE_FACTOR = 0.3f;
+        public static float ALIEN_INVADER_PIC_SCALE_FACTOR = 0.25f;
         public static CCVector2 ALIEN_INVADERS_VELOCITY = new CCVector2(0, -3);
         public const int INTERVAL_BETWEEN_ALIEN_INVADER_ATTACKS_MS = 3000000;
+        public enum AlienTrajectoryPattern { StraightToDest, SteerInChosenDirection, Primitive };
 
         // variables relevant to AlienInvaders' rocket launching activity
         public static float ALIEN_INVADERS_ROCKET_PIC_SCALE_FACTOR = 0.5f;

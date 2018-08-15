@@ -34,7 +34,7 @@ namespace RocketInvasion.Sprites
             }
         }
 
-        public void NextFrameupdate() {
+        public void NextFrameUpdate() {
             if (this.IsLRFloating)
             {
                 this.UpdateHiveXMargins();
@@ -42,7 +42,7 @@ namespace RocketInvasion.Sprites
             }
             else
                 // set x-velocity to 0 for each alien
-                UpdateFloatVelocityForEachAlienInvader(0);
+                UpdateFloatVelocityForEachNonAttackingAlienInvader(0);
         }
 
         public void UpdateHiveXMargins()
@@ -83,13 +83,14 @@ namespace RocketInvasion.Sprites
                         return;
                 }
 
-                UpdateFloatVelocityForEachAlienInvader(this.LRFloatingVelocity);                    
+                UpdateFloatVelocityForEachNonAttackingAlienInvader(this.LRFloatingVelocity);                    
             }
         }
 
-        public void UpdateFloatVelocityForEachAlienInvader(float xVel) {
+        public void UpdateFloatVelocityForEachNonAttackingAlienInvader(float xVel) {
             foreach (AlienInvader alien in AlienInvadersList)
-                alien.Velocity = new CCVector2(xVel, alien.Velocity.Y);
+                if (! alien.IsAttacking)
+                    alien.Velocity = new CCVector2(xVel, alien.Velocity.Y);
         }
 
         // to do:

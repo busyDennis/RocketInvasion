@@ -4,11 +4,13 @@ CURRENT TASKS
 
 (2) iOS emulator
 
-(3) Introductory screen: once the player clicks a button of choice, the button should darken and the whole screen should fade out
+(3) Introductory screen animation: once the player clicks a button of choice, the button should darken and the whole screen should fade out
 
-(4) Animated background
-- Open space with stars
-- Stars twinkle somehow
+(4) Enemy behaviour:
+- moving to a specified point
+- steering
+- following
+- loop trajectory
 
 Implementations:
 (a)

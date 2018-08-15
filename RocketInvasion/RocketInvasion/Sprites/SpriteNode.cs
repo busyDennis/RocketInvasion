@@ -33,7 +33,7 @@ namespace RocketInvasion.Sprites
             this.AddChild(sprite);
         }
 
-        public void NextFrameUpdate() {
+        public virtual void NextFrameUpdate() {
             GameParameters.RENDERING_SURFACE_MUTEX.WaitOne();
             this.Position += new CCPoint(this.Velocity.X, this.Velocity.Y);
             GameParameters.RENDERING_SURFACE_MUTEX.ReleaseMutex();

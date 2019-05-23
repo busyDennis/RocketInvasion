@@ -20,7 +20,7 @@ namespace RocketInvasion.Sprites
 
         public int Lives { get; set; }
 
-        public int HealthPoints { get; set; }
+        public new int HealthPoints { get; set; }
 
         public bool IsVisible { get { return this.sprite.Visible; } set { this.sprite.Visible = value; } }
 
@@ -49,18 +49,18 @@ namespace RocketInvasion.Sprites
 
             for (int i = 0; i < 7; i++)
             {
-                for (byte j = 180; j > 100; j--)
+                for (byte j = 200; j > 100; j--)
                 {
                     this.sprite.Opacity = j;
 
-                    System.Threading.Tasks.Task.Delay(1).Wait();
+                    System.Threading.Tasks.Task.Delay(2).Wait();
                 }
 
-                for (byte j = 100; j < 180; j++)
+                for (byte j = 100; j < 200; j++)
                 {
                     this.sprite.Opacity = j;
 
-                    System.Threading.Tasks.Task.Delay(1).Wait();
+                    System.Threading.Tasks.Task.Delay(2).Wait();
                 }
             }
 

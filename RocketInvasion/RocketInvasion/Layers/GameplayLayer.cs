@@ -27,15 +27,13 @@ namespace RocketInvasion.Layers
         {
             Animations.Init();
 
-            System.Diagnostics.Debug.WriteLine("VisibleBoundsWorldspace.Size.ToString(): " + this.ContentSize.ToString());
-
 
             renderTexture = new CCRenderTexture(VisibleBoundsWorldspace.Size, VisibleBoundsWorldspace.Size * 2);
 
-            background = new SpaceBackground(VisibleBoundsWorldspace);
+            background = new SpaceBackground();
+            background.Position = new CCPoint(0, 0);
 
             player = new Player();
-
             player.Position = GameParameters.PLAYER_INITIAL_POSITION;
             player.RocketLaunched += NewRocketHandler;
 
@@ -48,7 +46,6 @@ namespace RocketInvasion.Layers
             alienAttackMillis = 0;
 
             alienHive = new AlienHive(this.ContentSize, NewRocketHandler);
-            alienHive.IsLRFloating = true;
 
             playerLifeHpDisplay = new PlayerLifeHpDisplayNode(ref player);
             playerLifeHpDisplay.Position = new CCPoint(VisibleBoundsWorldspace.Size.Width, VisibleBoundsWorldspace.Size.Height);
@@ -68,16 +65,18 @@ namespace RocketInvasion.Layers
 
             renderTexture.Sprite.AddChild(playerLifeHpDisplay);
 
-            Schedule(GameLoop, GameParameters.ANIMATION_FRAME_CHANGE_INTERVAL); 
+            Schedule(GameLoop, GameParameters.ANIMATION_FRAME_CHANGE_INTERVAL_SECONDS);
         }
 
         private void GameLoop(float frameTimeInSeconds)
         {
             // UPDATE GRAPHICS
-
             background.NextFrameUpdate();
+            background.BlinkingActivity(frameTimeInSeconds);
 
             // UPDATE SPRITES
+
+            // update space background
 
             // update player
             player.RocketLaunchingActivity(frameTimeInSeconds);
@@ -94,7 +93,8 @@ namespace RocketInvasion.Layers
             // update alien invaders
             alienHive.NextFrameUpdate();
             for (int i = 0; i < alienHive.AlienInvadersList.Count; i++) {
-                alienHive.AlienInvadersList[i].NextFrameUpdate();
+                // alienHive.AlienInvadersList[i].NextFrameUpdate();
+                alienHive.AlienInvadersList[i].SteeringActivity(frameTimeInSeconds);
                 alienHive.AlienInvadersList[i].RocketLaunchingActivity(frameTimeInSeconds);
             }
 
@@ -135,7 +135,7 @@ namespace RocketInvasion.Layers
                 {
                     alienHive.AlienInvadersList[i].IsAttacking = true;
 
-                    alienHive.AlienInvadersList[i].SetBehaviorStraightToDest(new CCPoint(150, 150), 5);
+                    alienHive.AlienInvadersList[i].SetBehaviorSteer(); //SetBehaviorStraightToDest(new CCPoint(150, 150), 5);
 
                     alienHive.AlienInvadersList[i].IsLaunchingRockets = true;
                     return;
@@ -216,6 +216,9 @@ namespace RocketInvasion.Layers
             }
         }
 
+        /**
+          Called when this layer is added to scene 
+        */
         protected override void AddedToScene() {
             base.AddedToScene();
 
@@ -228,7 +231,11 @@ namespace RocketInvasion.Layers
 
             AddEventListener(touchListener, this);
 
+            background.Initialize(this.ContentSize);
+            background.StartMoving();
+
             alienHive.PhoneScreenWidthVar = this.ContentSize.Width;
+            alienHive.IsLRFloating = true;
         }
 
         void OnTouchesEnded(List<CCTouch> touches, CCEvent touchEvent)

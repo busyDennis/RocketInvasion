@@ -84,8 +84,8 @@ namespace RocketInvasion.UIComponents
             {
                 if (touch != null)
                 {
-                    System.Diagnostics.Debug.WriteLine("touch.Location.ToString(): " + touch.Location.ToString());
-                    System.Diagnostics.Debug.WriteLine("this.BoundingBoxTransformedToWorld.ToString(): " + this.BoundingBoxTransformedToWorld.ToString());
+                    System.Diagnostics.Debug.WriteLine("Button touch location touch.Location.ToString(): " + touch.Location.ToString());
+                    System.Diagnostics.Debug.WriteLine("Button bounding box - this.BoundingBoxTransformedToWorld.ToString(): " + this.BoundingBoxTransformedToWorld.ToString());
 
                     if (this.BoundingBoxTransformedToWorld.ContainsPoint(touch.Location))
                     {

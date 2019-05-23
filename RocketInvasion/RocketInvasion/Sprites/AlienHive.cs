@@ -11,9 +11,9 @@ namespace RocketInvasion.Sprites
 
         float xMarginLeft, xMarginRight;
 
+        /* "LR floating" - left-to-right floating */
         public bool IsLRFloating { get; set; }
         public float LRFloatingVelocity { get; set; }
-
         public float PhoneScreenWidthVar { get; set; }
 
 
@@ -32,6 +32,9 @@ namespace RocketInvasion.Sprites
                     AlienInvadersList[alienInvadersCount++].RocketLaunched += alienRocketHandler;
                 }
             }
+
+            xMarginLeft = 250f;
+            xMarginRight = 550f;
         }
 
         public void NextFrameUpdate() {
@@ -47,21 +50,8 @@ namespace RocketInvasion.Sprites
 
         public void UpdateHiveXMargins()
         {
-            if (AlienInvadersList.Count == 0)
-                return;
-
-            float minX = AlienInvadersList[0].PositionX, maxX = AlienInvadersList[0].PositionX;
-
-            foreach (AlienInvader alien in AlienInvadersList)
-            {
-                if (minX > alien.PositionX)
-                    minX = alien.PositionX;
-                if (maxX < alien.PositionX)
-                    maxX = alien.PositionX;
-            }
-
-            this.xMarginLeft = minX;
-            this.xMarginRight = maxX;
+            xMarginLeft += this.LRFloatingVelocity;
+            xMarginRight += this.LRFloatingVelocity;
         }
 
         public void UpdateHiveFloatVelocityBasedOnXMargins() {

@@ -8,8 +8,12 @@ namespace RocketInvasion.Sprites
         public enum SteeringState { Steering, Moving, Stopped };
 
         private CCAffineTransform affineTransform = new CCAffineTransform();
-        private GameParameters.AlienTrajectoryPattern trajectoryPattern;
-        private CCPoint destinationPoint;
+        private GameParameters.AlienBehaviorPattern behaviorPattern;
+
+        bool isAttacking;
+
+        public AlienHive AlienHive { get; set; }
+        public Tuple<int, int> PositionInHive { get; set; }
 
         private float velocityDirectionAngle;
 
@@ -21,7 +25,7 @@ namespace RocketInvasion.Sprites
 
         private SteeringState steeringState;
 
-        private Random randGenerator = new Random();
+        private Random randomGenerator = new Random();
         private int randInt;
 
         public AlienInvader() {
@@ -32,7 +36,7 @@ namespace RocketInvasion.Sprites
             affineTransform.Rotation = 0;
             this.IntervalBetweenRocketLaunches = GameParameters.INTERVAL_BETWEEN_ALIEN_INVADER_ROCKET_LAUNCHES;
 
-            this.trajectoryPattern = GameParameters.AlienTrajectoryPattern.Primitive;
+            this.behaviorPattern = GameParameters.AlienBehaviorPattern.Steer;
 
             this.steeringState = AlienInvader.SteeringState.Stopped;
             movingTimeInChosenDirectionInFrames = 0;
@@ -62,39 +66,30 @@ namespace RocketInvasion.Sprites
 
         public bool IsAttacking
         {
-            get;
-            set;
+            get { return isAttacking; }
+            set { isAttacking = value; }
         }
 
-        
-        public void SetBehaviorStraightToDest(CCPoint destinationPoint, double speedAbs) {
-            this.trajectoryPattern = GameParameters.AlienTrajectoryPattern.StraightToDest;
+        public void SetBehaviorDormantInHive()
+        {
+            this.behaviorPattern = GameParameters.AlienBehaviorPattern.DormantInHive;
 
-            this.destinationPoint = destinationPoint;
-
-            double tanAlpha = Math.Abs(destinationPoint.Y - this.Position.Y) / Math.Abs(destinationPoint.X - this.Position.X);
-            double speedX = Math.Sqrt(speedAbs / (tanAlpha * tanAlpha + 1));
-            double speedY = tanAlpha * speedX;
-
-            if (destinationPoint.X < this.Position.X)
-                speedX = -speedX;
-
-            if (destinationPoint.Y < this.Position.Y)
-                speedY = -speedY;
-
-            this.Velocity = new CCVector2((float)speedX, (float)speedY);
         }
-        
 
         public void SetBehaviorSteer()
         {
-            this.trajectoryPattern = GameParameters.AlienTrajectoryPattern.Steer;
+            this.behaviorPattern = GameParameters.AlienBehaviorPattern.Steer;
 
             this.steeringState = AlienInvader.SteeringState.Moving;
             this.movingTimeInChosenDirectionInFrames = 0;
             this.steerToAngle = 225f;
 
             SetVelocityAndRotationByAngle(270f, GameParameters.ALIEN_INVADER_VELOCITY_VAL);
+        }
+
+        public void SetBehaviorReturnToHive(float screenHeight) {
+            this.Position = new CCPoint(this.AlienHive.GetPositionOfSlot(this.PositionInHive).X, screenHeight);
+            this.behaviorPattern = GameParameters.AlienBehaviorPattern.ReturnToHive;
         }
 
         private void SetVelocityAndRotationByAngle(float angle, float velocityAbsVal)
@@ -108,21 +103,18 @@ namespace RocketInvasion.Sprites
 
         public override void NextFrameUpdate()
         {
-            switch (this.trajectoryPattern) {
-                case GameParameters.AlienTrajectoryPattern.Primitive:
+            switch (this.behaviorPattern) {
+                case GameParameters.AlienBehaviorPattern.DormantInHive:
+                    GameParameters.RENDERING_SURFACE_MUTEX.WaitOne();
+                    this.Position = this.AlienHive.GetPositionOfSlot(this.PositionInHive);
+                    GameParameters.RENDERING_SURFACE_MUTEX.ReleaseMutex(); ;
+                    break;
+                case GameParameters.AlienBehaviorPattern.Steer:
+                    SteeringBehavior();
                     UpdatePosition();
                     break;
-                case GameParameters.AlienTrajectoryPattern.StraightToDest:
-                    if (Math.Abs(this.Position.X - this.destinationPoint.X) < 2.0 && Math.Abs(this.Position.Y - this.destinationPoint.Y) < 2.0)
-                        this.Velocity = new CCVector2(0, 0);
-                    
-                    UpdatePosition();
-                    break;
-                case GameParameters.AlienTrajectoryPattern.Steer:
-                    // should take turns in steering left and right
-                    // steers left or right within time limits
-                    // steering is an activity
-                    UpdatePosition();
+                case GameParameters.AlienBehaviorPattern.ReturnToHive:
+                    ReturningToHiveBehavior();
                     break;
             }
         }
@@ -131,9 +123,7 @@ namespace RocketInvasion.Sprites
         /**              
             Steers to one angle for a while (inputs: new angle, angular speed), then stops steering and just moves (input: moving time), then steers to another angle etc.
         */
-        public void SteeringActivity(float frameTimeInSeconds) {
-            
-
+        public void SteeringBehavior() {
             if (this.movingTimeInChosenDirectionInFrames > 0) {
                 // continue in the same direction
                 this.movingTimeInChosenDirectionInFrames -= 1;
@@ -147,7 +137,7 @@ namespace RocketInvasion.Sprites
 
                     this.steeringCounterlockwise = ! this.steeringCounterlockwise; // changing steering direction
 
-                    randInt = randGenerator.Next(0, 100);
+                    randInt = randomGenerator.Next(0, 100);
 
                     if (randInt < 70) {
                         deepSteering = false;
@@ -172,7 +162,7 @@ namespace RocketInvasion.Sprites
                         else
                         {
                             this.steeringState = AlienInvader.SteeringState.Moving;
-                            this.movingTimeInChosenDirectionInFrames = deepSteering ? GameParameters.ALIEN_INVADER_MAX_TIME_INTERVAL_FOR_MOVING_STAGE_IN_NUM_FRAMES : randGenerator.Next(0, GameParameters.ALIEN_INVADER_MAX_TIME_INTERVAL_FOR_MOVING_STAGE_IN_NUM_FRAMES);
+                            this.movingTimeInChosenDirectionInFrames = deepSteering ? GameParameters.ALIEN_INVADER_MAX_TIME_INTERVAL_FOR_MOVING_STAGE_IN_NUM_FRAMES : randomGenerator.Next(0, GameParameters.ALIEN_INVADER_MAX_TIME_INTERVAL_FOR_MOVING_STAGE_IN_NUM_FRAMES);
                             SetVelocityAndRotationByAngle(this.steerToAngle, GameParameters.ALIEN_INVADER_VELOCITY_VAL);
                         }
                     } else { // steering clockwise
@@ -186,14 +176,72 @@ namespace RocketInvasion.Sprites
                         else
                         {
                             this.steeringState = AlienInvader.SteeringState.Moving;
-                            this.movingTimeInChosenDirectionInFrames = deepSteering ? GameParameters.ALIEN_INVADER_MAX_TIME_INTERVAL_FOR_MOVING_STAGE_IN_NUM_FRAMES : randGenerator.Next(0, GameParameters.ALIEN_INVADER_MAX_TIME_INTERVAL_FOR_MOVING_STAGE_IN_NUM_FRAMES);
+                            this.movingTimeInChosenDirectionInFrames = deepSteering ? GameParameters.ALIEN_INVADER_MAX_TIME_INTERVAL_FOR_MOVING_STAGE_IN_NUM_FRAMES : randomGenerator.Next(0, GameParameters.ALIEN_INVADER_MAX_TIME_INTERVAL_FOR_MOVING_STAGE_IN_NUM_FRAMES);
                             SetVelocityAndRotationByAngle(velocityDirectionAngle, GameParameters.ALIEN_INVADER_VELOCITY_VAL);
                         }
                     }
                 }
             }
+        }
 
-            UpdatePosition();
+        public void ReturningToHiveBehavior() {
+            CCPoint parkingSpot = this.AlienHive.GetPositionOfSlot(this.PositionInHive);
+
+            float dist = CCPoint.Distance(this.Position, parkingSpot);
+
+            if (dist > GameParameters.ALIEN_INVADER_VELOCITY_VAL) {
+                this.AimAtPoint2(parkingSpot, GameParameters.ALIEN_INVADER_VELOCITY_VAL);
+                UpdatePosition();
+            }
+            else
+            {
+                GameParameters.RENDERING_SURFACE_MUTEX.WaitOne();
+                this.Position = parkingSpot;
+                GameParameters.RENDERING_SURFACE_MUTEX.ReleaseMutex();
+                this.SetBehaviorDormantInHive();
+                this.IsAttacking = false;
+                this.IsLaunchingRockets = false;
+            }
+        }
+
+        /** Is possibly wrong
+         */
+        public void AimAtPoint(CCPoint dest, float speedAbs)
+        {
+            double tanAlpha = Math.Abs(dest.Y - this.Position.Y) / Math.Abs(dest.X - this.Position.X);
+            double speedX = speedAbs / Math.Sqrt(tanAlpha * tanAlpha + 1); 
+            double speedY = tanAlpha * speedX;
+
+            if (dest.X < this.Position.X)
+                speedX = -speedX;
+
+            if (dest.Y < this.Position.Y)
+                speedY = -speedY;
+
+            this.Velocity = new CCVector2((float)speedX, (float)speedY);
+        }
+
+        public void AimAtPoint2(CCPoint dest, float speedAbs)
+        {
+            float tanAlpha = Math.Abs(dest.Y - this.Position.Y) / Math.Abs(dest.X - this.Position.X);
+            double alpha = Math.Atan(tanAlpha) * 180 / Math.PI;
+
+            double beta;
+            if (dest.X >= this.Position.X)
+            {
+                if (dest.Y >= this.Position.Y)
+                    beta = alpha;
+                else
+                    beta = 360 - alpha;
+            }
+            else {
+                if (dest.Y >= this.Position.Y)
+                    beta = 180 - alpha;
+                else
+                    beta = 180 + alpha;
+            }
+
+            SetVelocityAndRotationByAngle((float)beta, speedAbs);
         }
 
         private void UpdatePosition() {

@@ -1,4 +1,10 @@
-CURRENT TASKS
+IMMEDIATE TASKS
+
+- Attacking alien returns back to the hive
+- Create 2 more types of attacking aliens (just different pictures for now)
+- Instead of statically encoded constants for alien locations in hive, make hive alignment based on screen size
+
+OTHER CURRENT TASKS
 
 (1) Test on device for lags esp. for introductory screen
 
@@ -9,7 +15,6 @@ CURRENT TASKS
 (4) Enemy behaviour:
 - moving to a specified point
 - steering
-- following
 - loop trajectory
 
 Implementations:
@@ -22,6 +27,5 @@ or
 
 (5) More advanced attack by individual alien:
 - Alien spaceship follows predefined (speed/time-based) trajectory
-- In closer proximity alien aims at the player
 
 ===============================================================================================

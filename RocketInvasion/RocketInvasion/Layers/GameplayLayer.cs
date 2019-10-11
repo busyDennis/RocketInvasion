@@ -90,11 +90,15 @@ namespace RocketInvasion.Layers
                 alienInvadersRocketList[i].NextFrameUpdate();
             }
 
-            // update alien invaders
+            // it's important that hive is updated before the invaders, because positions of dormant invaders depend on the hive
             alienHive.NextFrameUpdate();
             for (int i = 0; i < alienHive.AlienInvadersList.Count; i++) {
-                // alienHive.AlienInvadersList[i].NextFrameUpdate();
-                alienHive.AlienInvadersList[i].SteeringActivity(frameTimeInSeconds);
+                if (alienHive.AlienInvadersList[i].Position.Y < 0)
+                {
+                    //alienHive.AlienInvadersList[i].Position = new CCPoint(alienHive.AlienInvadersList[i].Position.X, this.ContentSize.Height);
+                    alienHive.AlienInvadersList[i].SetBehaviorReturnToHive(this.ContentSize.Height);
+                }
+                alienHive.AlienInvadersList[i].NextFrameUpdate();
                 alienHive.AlienInvadersList[i].RocketLaunchingActivity(frameTimeInSeconds);
             }
 
@@ -115,32 +119,9 @@ namespace RocketInvasion.Layers
 
             if (alienAttackMillis > GameParameters.INTERVAL_BETWEEN_ALIEN_INVADER_ATTACKS_MS) {
                 alienAttackMillis = 0;
-                launchAlienAttack();
+                alienHive.LaunchAlienAttack();
             } else {
                 alienAttackMillis += 20000;
-            }
-        }
-
-        private void launchAlienAttack()
-        {
-            // preliminary version: we choose one random alien for a straightforward attack
-
-            if (alienHive.AlienInvadersList.Count == 0)
-                return;
-
-            for (int i = 0; i < alienHive.AlienInvadersList.Count; i++)
-            {
-                Monitor.Enter(alienHive.AlienInvadersList);
-                if (!alienHive.AlienInvadersList[i].IsAttacking)
-                {
-                    alienHive.AlienInvadersList[i].IsAttacking = true;
-
-                    alienHive.AlienInvadersList[i].SetBehaviorSteer(); //SetBehaviorStraightToDest(new CCPoint(150, 150), 5);
-
-                    alienHive.AlienInvadersList[i].IsLaunchingRockets = true;
-                    return;
-                }
-                Monitor.Exit(alienHive.AlienInvadersList);
             }
         }
 

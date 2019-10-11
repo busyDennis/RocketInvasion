@@ -44,7 +44,7 @@ namespace RocketInvasion
         public static float ALIEN_INVADER_PIC_SCALE_FACTOR = 0.25f;
         public static int ALIEN_INVADER_VELOCITY_VAL = 14;
         public const int INTERVAL_BETWEEN_ALIEN_INVADER_ATTACKS_MS = 3000000;
-        public enum AlienTrajectoryPattern { StraightToDest, Steer, Primitive };
+        public enum AlienBehaviorPattern { DormantInHive, Steer, ReturnToHive };
         public const int ALIEN_INVADER_STEERING_ANGULAR_INCREMENT = 10; // deg
         public const int ALIEN_INVADER_TIME_INTERVAL_FOR_ONE_STEERING_STEP_IN_NUM_FRAMES = 0;
         public const int ALIEN_INVADER_MAX_TIME_INTERVAL_FOR_MOVING_STAGE_IN_NUM_FRAMES = 25;
